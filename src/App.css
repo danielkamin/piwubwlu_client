@@ -1,0 +1,298 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+:root {
+  --primary: #1d3557;
+  --secondary: #457b9d;
+}
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif !important;
+}
+.error {
+  color: red;
+  text-align: center;
+}
+.button-links {
+  text-decoration: none;
+  color: initial;
+}
+.btn-margin {
+  margin: 1rem 0;
+}
+.form {
+  position: absolute;
+  z-index: 2;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.form-grid {
+  display: grid;
+  width: 60%;
+}
+.form-grid button {
+  margin-top: 10px;
+}
+.profile-nav {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  height: 280px;
+  width: 13%;
+  padding: 0;
+  text-align: center;
+}
+.profile-nav a {
+  text-decoration: none;
+  display: block;
+  margin: 30px 0;
+}
+.black-hidden {
+  background: black;
+  overflow: hidden;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 50px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.card {
+  width: 350px;
+  margin: 30px;
+}
+.card-content {
+  height: 130px;
+}
+.banner {
+  height: 60vh;
+  display: flex;
+  text-align: center;
+  background: black;
+}
+.login-register {
+  display: flex;
+}
+.img-cover {
+  min-width: 100%;
+  object-fit: cover;
+  opacity: 0.4;
+  background: center no-repeat;
+  background-size: cover;
+}
+.title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5rem;
+}
+.title h3 {
+  display: block;
+  z-index: 1;
+  position: relative;
+}
+.title h3::after {
+  content: '';
+  width: 80%;
+  bottom: -5px;
+  left: 10%;
+  z-index: -1;
+
+  position: absolute;
+  border-bottom: 1px solid var(--secondary);
+}
+.banner-subtitle {
+  position: absolute;
+  z-index: 2;
+  top: 30%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  color: white;
+  display: block;
+}
+.main-container {
+  min-height: 90vh;
+}
+.footer {
+  text-align: center;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f9f9f9;
+  border-top: 1px solid #efefef;
+}
+.footer .content {
+  display: flex;
+  flex-direction: column;
+}
+.footer .socials {
+  display: flex;
+  margin: 20px 0;
+  justify-content: space-evenly;
+}
+.rent-form {
+  display: block;
+  margin: 20px 0;
+  padding: 20px;
+}
+.rent-form .MuiTypography-root {
+  margin-left: 10px;
+}
+.resource-table {
+  height: 550px;
+  width: 100%;
+}
+.home-container {
+  text-align: center;
+  padding: 50px 0;
+  margin: 20px 0;
+}
+.reservation-form {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+.reservation-form .MuiFormControl-root {
+  width: 20%;
+  margin: 0 20px;
+}
+.image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+.image-preview {
+  max-width: 100%;
+  max-height: 100%;
+}
+.workshops {
+  display: grid;
+  margin: 5rem;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+.image-details {
+  width: 250px;
+  height: auto;
+}
+.image-details img {
+  width: 100%;
+}
+.large-avatar {
+  height: 50px;
+}
+.container-spacing {
+  margin: 5rem 0;
+}
+.form-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.fc-button-primary {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+.fc-v-event {
+  /* background-color: var(--secondary) !important;
+  border-color: var(--secondary) !important; */
+}
+.fc-timegrid-event {
+  cursor: pointer;
+  transition: 0.2s;
+}
+.fc-timegrid-event:hover {
+  opacity: 0.8;
+  transition: 0.2s;
+}
+.details .main {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+.details .image {
+  display: flex;
+}
+.details .submain {
+  margin: 20px 0;
+}
+.sort-form {
+  display: flex;
+  margin: 20px 0;
+  align-items: baseline;
+}
+.sort-form b {
+  font-size: 16px;
+  margin-right: 10px;
+}
+@media only screen and (max-width: 1024px) {
+  .profile-nav {
+    margin: 30px auto;
+    position: static;
+    height: 130px;
+    right: 0;
+    width: 100%;
+  }
+  .profile-nav a {
+    margin: 20px 10px;
+    display: inline-block;
+  }
+  .form-grid {
+    width: 70%;
+  }
+}
+@media only screen and (max-width: 568px) {
+  .card-container {
+    padding: 10px;
+    width: 100%;
+  }
+  .workshops {
+    margin: auto;
+  }
+  .form-grid {
+    width: 90%;
+  }
+  .resource-table {
+    height: 500px;
+  }
+  .title {
+    margin: 0 auto;
+    width: 300px;
+  }
+  .rent-form .MuiTypography-root {
+    margin-left: 0px;
+  }
+}
+.email-link p {
+  display: flex;
+  height: 40px;
+}
+.email-link a {
+  text-decoration: none;
+  color: var(--secondary);
+}
+.employee-info {
+  margin: 20px;
+}
+.flex-center-column {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+  flex-direction: column;
+}

@@ -1,13 +1,14 @@
 import React from 'react';
-import { postData } from '../../Api/index';
+import { postData } from '../../../../api/index';
 import { useHistory } from 'react-router-dom';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { IWorkshopType, WorkshopTypeSchema } from './types';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { IWorkshopType } from '../../types';
+import { WorkshopTypeSchema } from '../../schemas';
 import { Button, TextField, Container, Avatar, Typography, CssBaseline, Paper } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
-import useStyles from '../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
 
 const NewWorkshopType: React.FC = () => {

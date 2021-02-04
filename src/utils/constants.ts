@@ -5,3 +5,6 @@ export const ROLES = [
    'EMPLOYEE',
     'REGULAR', 
   ]; 
+  export const TimeUnit = {
+    15:'15',30:'30',45:'45',60:'60'
+  }

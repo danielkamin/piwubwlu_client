@@ -15,3 +15,4 @@ export type Params = {
     employee:'EMPLOYEE',
     regular:'REGULAR'
   }
+  

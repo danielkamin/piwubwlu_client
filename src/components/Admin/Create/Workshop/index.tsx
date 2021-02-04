@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { postData, getData, postImage } from '../../Api/index';
+import { postData, getData, postImage } from '../../../../api/index';
 import { useHistory } from 'react-router-dom';
-import { getAccessToken } from '../../Helpers/accessToken';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import ClearIcon from '@material-ui/icons/Clear';
-import { ILab, IWorkshopType, IEmployee, WorkshopSchema } from './types';
+import { ILab, IWorkshopType, IEmployee } from '../../types';
+import { WorkshopSchema } from '../../schemas';
 import {
   Button,
   TextField,
@@ -21,11 +22,11 @@ import {
   Typography
 } from '@material-ui/core';
 import { Formik, Form, Field, FieldArray } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import useStyles from '../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
-import ImageUpload from '../Utils/Buttons/ImageUpload';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
+import ImageUploadButton from '../../../Shared/Buttons/ImageUploadButton';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 const NewWorkshop: React.FC = () => {
   const history = useHistory();
   const classes = useStyles();
@@ -51,13 +52,16 @@ const NewWorkshop: React.FC = () => {
 
   const createWorkshop = async (values: any) => {
     console.log(values);
-    const res = await postData('workshops', getAccessToken(), values);
-    const file = inputImage.current as HTMLInputElement;
-    if (file.files![0] !== undefined) {
-      await postImage('workshops/upload_image', getAccessToken(), file.files![0], res?.data.id);
-    }
-    context.openAlert(AlertType.success, 'Pomyślnie dodano nową pracownię do bazy!');
-    history.push('/admin/workshops');
+    await postData('workshops', getAccessToken(), values)
+      .then(async (res) => {
+        const file = inputImage.current as HTMLInputElement;
+        if (file.files![0] !== undefined) {
+          await postImage('workshops/upload_image', getAccessToken(), file.files![0], res?.data.id);
+        }
+        context.openAlert(AlertType.success, 'Pomyślnie dodano nową pracownię do bazy!');
+        history.push('/admin/workshops');
+      })
+      .catch((err) => context.openAlert(AlertType.warning, 'Coś poszło nie tak.'));
   };
   const HandleFileUpload = () => {
     setCurrentPhoto(URL.createObjectURL(inputImage.current?.files![0]));
@@ -163,7 +167,7 @@ const NewWorkshop: React.FC = () => {
                   )}
                 </FieldArray>
               </FormGroup>
-              <ImageUpload currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
+              <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' color='primary' disabled={isSubmitting}>
                 Stwórz Pracownię
               </Button>

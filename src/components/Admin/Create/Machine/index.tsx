@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { postData, getData, postImage } from '../../Api/index';
+import { postData, getData, postImage } from '../../../../api/index';
 import { useHistory } from 'react-router-dom';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { IMachine, MachineSchema, IWorkshop } from './types';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { IMachine, IWorkshop } from '../../types';
+import { MachineSchema } from '../../schemas';
 import { Button, TextField, Container, InputLabel, FormControlLabel, FormHelperText, Avatar, CssBaseline, NativeSelect, FormControl, Checkbox, Paper, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import ImageUpload from '../Utils/Buttons/ImageUpload';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
-import { TimeUnit } from '../../Helpers/types';
-import useStyles from '../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import ImageUploadButton from '../../../Shared/Buttons/ImageUploadButton';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import { TimeUnit } from '../../../../utils/constants';
+import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
 
 const NewMachine: React.FC = () => {
@@ -29,13 +30,16 @@ const NewMachine: React.FC = () => {
     setCurrentPhoto(URL.createObjectURL(inputImage.current?.files![0]));
   };
   const createMachine = async (values: IMachine) => {
-    const res = await postData('machines', getAccessToken(), values);
-    const file = inputImage.current as HTMLInputElement;
-    if (file.files![0] !== undefined) {
-      await postImage('machines/upload_image', getAccessToken(), file.files![0], res?.data.id);
-    }
-    context.openAlert(AlertType.success, 'Pomyślnie dodano nową maszynę do bazy!');
-    history.push('/admin/machines');
+    await postData('machines', getAccessToken(), values)
+      .then(async (res) => {
+        const file = inputImage.current as HTMLInputElement;
+        if (file.files![0] !== undefined) {
+          await postImage('machines/upload_image', getAccessToken(), file.files![0], res?.data.id);
+        }
+        context.openAlert(AlertType.success, 'Pomyślnie dodano nową maszynę do bazy!');
+        history.push('/admin/machines');
+      })
+      .catch((err) => context.openAlert(AlertType.warning, 'Coś poszło nie tak.'));
   };
   return (
     <Container maxWidth='sm' component='main'>
@@ -55,7 +59,7 @@ const NewMachine: React.FC = () => {
             timeUnit: '',
             maxUnit: 0,
             machineState: false,
-            workshopId: ''
+            workshopId: 0
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -102,7 +106,7 @@ const NewMachine: React.FC = () => {
                 </Field>
                 <FormHelperText>{errors.workshopId}</FormHelperText>
               </FormControl>
-              <ImageUpload currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
+              <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' disabled={isSubmitting} color='primary'>
                 Dodaj Maszynę
               </Button>

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { postData } from '../../Api/index';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { IDepartment, DepartmentSchema } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
+import { postData } from '../../../../api/index';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { IDepartment } from '../../types';
+import { DepartmentSchema } from '../../schemas';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import { Button, TextField, Paper, Container, Avatar, Typography, CssBaseline } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import useStyles from '../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
 
 const NewDepartment: React.FC = () => {
@@ -16,9 +17,14 @@ const NewDepartment: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const createDepartment = async (values: IDepartment) => {
-    const res = await postData('departments', getAccessToken(), values);
-    context.openAlert(AlertType.success, 'Pomyślnie dodano nową katedrę do bazy!');
-    history.push('/admin/departments');
+    await postData('departments', getAccessToken(), values)
+      .then((res) => {
+        context.openAlert(AlertType.success, 'Pomyślnie dodano nową katedrę do bazy!');
+        history.push('/admin/departments');
+      })
+      .catch((err) => {
+        context.openAlert(AlertType.warning, 'Coś poszło nie tak.');
+      });
   };
   return (
     <Container maxWidth='sm' component='main'>

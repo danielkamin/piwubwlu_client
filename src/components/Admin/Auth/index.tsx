@@ -8,7 +8,6 @@ import { authRoute } from '../../../api/index';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { useUserContext } from '../../../context/UserContext';
 import useStyles from '../styles';
-import { API_URL } from '../../../utils/constants';
 import { useAlertContext, AlertType } from '../../../context/AlertContext';
 import { ILogin } from '../types';
 import { LoginSchema } from '../schemas';
@@ -42,7 +41,7 @@ const AdminLogin: React.FC = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Admin Panel
+          Panel administracyjny
         </Typography>
         <Formik
           validateOnChange={true}

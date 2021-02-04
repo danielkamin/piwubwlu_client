@@ -1,4 +1,8 @@
 import {ReservationState} from '../Shared/types'
+type Employee = {
+    id?:number,
+    departmentId?:number
+}
 export interface IUser {
     id?:number;
     firstName:string;
@@ -13,8 +17,8 @@ export interface IGuest extends IUser{
     isVerified:boolean;
 }
 
-export interface Employee {
-    departmentId:number;
+export interface IEmployee extends IUser {
+    Employee:Employee
 }
 
 export interface IWorkshop {
@@ -27,10 +31,11 @@ export interface IWorkshop {
     imagePath:string;
 }
 
-export interface WorkshopType {
+export interface IWorkshopType {
     id?:number;
     name: string;
     english_name: string;
+    symbol:string;
 }
 
 export interface IMachine {

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { postData, getData } from '../../Api/index';
+import { postData, getData } from '../../../../api/index';
 import { useHistory } from 'react-router-dom';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { LabSchema } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { LabSchema } from '../../schemas';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import { Button, TextField, Container, InputLabel, FormControl, Paper, Avatar, Typography, CssBaseline, NativeSelect } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import { IEmployee } from '../Workshop/types';
-import useStyles from '../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { IEmployee } from '../../types';
+import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
 
 const NewLab: React.FC = () => {
@@ -20,9 +20,12 @@ const NewLab: React.FC = () => {
     getEmployees();
   }, []);
   const createLab = async (values: any) => {
-    const res = await postData('labs', getAccessToken(), values);
-    context.openAlert(AlertType.success, 'Pomyślnie dodano nowe laboratorium do bazy!');
-    history.push('/admin/labs');
+    await postData('labs', getAccessToken(), values)
+      .then((res) => {
+        context.openAlert(AlertType.success, 'Pomyślnie dodano nowe laboratorium do bazy!');
+        history.push('/admin/labs');
+      })
+      .catch((err) => context.openAlert(AlertType.warning, 'Coś poszło nie tak.'));
   };
   const getEmployees = async () => {
     const data = await getData('employees/list', getAccessToken());

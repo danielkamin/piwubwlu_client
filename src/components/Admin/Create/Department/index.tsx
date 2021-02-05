@@ -39,7 +39,7 @@ const NewDepartment: React.FC = () => {
 
         <Formik
           validateOnChange={true}
-          initialValues={{ name: '', english_name: '' }}
+          initialValues={{ name: '', english_name: '', id: 0 }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             createDepartment(data);

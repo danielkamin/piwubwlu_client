@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
-
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { putData, getData } from '../../Api/index';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { ILab, LabSchema } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
-import { IEmployee } from '../Workshop/types';
+import { getData, putData } from '../../../../api/index';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { ILab, IEmployee } from '../../types';
+import { LabSchema } from '../../schemas';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import { Button, TextField, Container, InputLabel, FormControl, Paper, Avatar, Typography, CssBaseline, NativeSelect } from '@material-ui/core';
 import { useParams, useHistory } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import { Params } from '../../Helpers/types';
-import useStyles from '../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { Params } from '../../../../utils/types';
+import useStyles from '../../styles';
 import EditIcon from '@material-ui/icons/Edit';
 const Lab: React.FC = () => {
   const classes = useStyles();
   const context = useAlertContext();
   const history = useHistory();
   const { id } = useParams<Params>();
-  const [currentLab, setCurrentLab] = useState<ILab>({ name: '', english_name: '', employeeId: 0 });
+  const [currentLab, setCurrentLab] = useState<ILab>({ id: 0, name: '', english_name: '', employeeId: 0 });
   const [loading, setLoading] = useState<boolean>(true);
   const [employees, setEmployees] = useState<IEmployee[]>([]);
   useEffect(() => {

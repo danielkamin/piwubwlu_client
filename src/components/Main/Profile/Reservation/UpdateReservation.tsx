@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import FullCalendar, { EventInput, EventClickArg } from '@fullcalendar/react';
-import { getData, putData } from '../../../Api/index';
+import { getData, putData } from '../../../../api/index';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { Button, Container, CircularProgress, Typography, TextField, Tooltip, Paper } from '@material-ui/core';
-import { useUserContext } from '../../Context/UserContext';
-import { getAccessToken } from '../../../Helpers/accessToken';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
-import MyDateTimePicker from '../../Utils/Inputs/MyDateTimePicker';
-import { ReservationSchema } from '../../Machine/types';
+import { Button, Container, CircularProgress, Typography, TextField, Paper } from '@material-ui/core';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import MyDateTimePicker from '../../../Shared/Inputs/MyDateTimePicker';
+import { ReservationSchema } from '../../schemas';
 import { Formik, Form, Field } from 'formik';
 import areIntervalsOverlapping from 'date-fns/areIntervalsOverlapping';
-import useStyles from '../../../Helpers/styles';
-import { idText } from 'typescript';
+import useStyles from '../../styles';
 function renderEventContent(eventInfo: any) {
   return (
     <>

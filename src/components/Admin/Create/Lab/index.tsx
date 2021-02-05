@@ -43,7 +43,7 @@ const NewLab: React.FC = () => {
         </Typography>
         <Formik
           validateOnChange={true}
-          initialValues={{ name: '', english_name: '', employeeId: '' }}
+          initialValues={{ name: '', english_name: '', employeeId: '', id: 0 }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             createLab(data);

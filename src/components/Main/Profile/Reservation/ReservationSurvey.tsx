@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { postData, getData } from '../../../Api/index';
+import { postData, getData } from '../../../../api/index';
 import { useHistory, useParams } from 'react-router-dom';
-import { Container, Button, Paper, TextField, CircularProgress } from '@material-ui/core';
+import { Container, Button, Paper, CircularProgress } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import { getAccessToken } from '../../../Helpers/accessToken';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
-import MyTextField from '../../Utils/Inputs/MyTextField';
-interface Props {}
-type Params = {
-  id: string;
-};
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import { Params } from '../../../../utils/types';
 
-const ReservationSurvey: React.FC<Props> = () => {
+const ReservationSurvey: React.FC = () => {
   const { id } = useParams<Params>();
   const [loading, setLoading] = useState(true);
   const alertContext = useAlertContext();

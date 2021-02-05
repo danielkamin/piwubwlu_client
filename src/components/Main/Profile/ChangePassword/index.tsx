@@ -1,19 +1,20 @@
 import { Formik, Form } from 'formik';
-import { authRoute } from '../../../Api/index';
-import MyTextField from '../../Utils/Inputs/MyTextField';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { authRoute } from '../../../../api/index';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import { Button, Container, TextField, Paper, Avatar, Typography, CssBaseline } from '@material-ui/core';
 import React from 'react';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
-import { IPasswordForm, ChangePasswordSchema } from '../types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import { NewPasswordForm } from '../../types';
+import { PasswordSchema } from '../../schemas';
 import { useHistory } from 'react-router-dom';
-import useStyles from '../../Login/styles';
+import useStyles from '../../styles';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 const ChangePassword: React.FC = () => {
   const context = useAlertContext();
   const history = useHistory();
   const classes = useStyles();
-  const postNewPassword = async (values: IPasswordForm) => {
+  const postNewPassword = async (values: NewPasswordForm) => {
     await authRoute('change_password', values, getAccessToken())
       .then((res) => {
         context.openAlert(AlertType.success, 'Zmiana hasła przebiegła pomyślnie');
@@ -36,7 +37,7 @@ const ChangePassword: React.FC = () => {
         </Typography>
         <Formik
           validateOnChange={true}
-          validationSchema={ChangePasswordSchema}
+          validationSchema={PasswordSchema}
           initialValues={{
             password: '',
             repeatPassword: ''

@@ -1,16 +1,16 @@
 import React, { useState, useEffect, ReactText } from 'react';
 import { Link } from 'react-router-dom';
-import { getData, deleteData } from '../../Api/index';
-import MyButtonGroup from '../Utils/Buttons/MyButtonGroup';
+import { getData, deleteData } from '../../../../api/index';
+import MyButtonGroup from '../../../Shared/Groups/MyButtonGroup';
 import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid';
-import { getAccessToken } from '../../Helpers/accessToken';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { IMachineDetails } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
+import { IMachine } from '../../types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 const MachineList: React.FC = () => {
   const context = useAlertContext();
   const [loading, setLoading] = useState<boolean>(true);
-  const [machines, setMachines] = useState<IMachineDetails[]>([]);
+  const [machines, setMachines] = useState<IMachine[]>([]);
   useEffect(() => {
     getMachines();
   }, []);
@@ -35,7 +35,7 @@ const MachineList: React.FC = () => {
       headerName: 'Identyfikator',
       width: 130,
       renderCell: (params: CellParams) => {
-        return <Link to={'/admin/machine/' + params.data.id}>{params.data.id}</Link>;
+        return <Link to={'/admin/machine/' + params.row.id}>{params.row.id}</Link>;
       }
     },
     { field: 'name', headerName: 'Nazwa', width: 130 },
@@ -53,9 +53,9 @@ const MachineList: React.FC = () => {
         return (
           <MyButtonGroup
             deleteCB={() => {
-              clickDelete(params.data.id);
+              clickDelete(params.row.id);
             }}
-            editLink={'/admin/update_machine/' + params.data.id}
+            editLink={'/admin/update_machine/' + params.row.id}
             modalBody='Czy na pewmo chcesz usunąć urządzenie badawcze z bazy?'
             modalTitle='Usuń maszynę'
           />

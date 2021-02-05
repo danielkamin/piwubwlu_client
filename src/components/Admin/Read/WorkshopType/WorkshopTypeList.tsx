@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { getData, deleteData } from '../../Api/index';
+import { getData, deleteData } from '../../../../api/index';
 import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid';
-import MyButtonGroup from '../Utils/Buttons/MyButtonGroup';
+import MyButtonGroup from '../../../Shared/Groups/MyButtonGroup';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { IWorkshopTypeDetails } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { IWorkshop } from '../../types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 const WorkshopTypeList: React.FC = () => {
   const context = useAlertContext();
   const [loading, setLoading] = useState<boolean>(true);
-  const [workshopTypes, setWorkshopTypes] = useState<IWorkshopTypeDetails[]>([]);
+  const [workshopTypes, setWorkshopTypes] = useState<IWorkshop[]>([]);
   useEffect(() => {
     getWorkshopTypes();
   }, []);
   const getWorkshopTypes = async () => {
-    const response = await getData('workshopTypes/', getAccessToken())
+    await getData('workshopTypes/', getAccessToken())
       .then((res) => {
         setWorkshopTypes(res);
         setLoading(false);
@@ -40,14 +40,14 @@ const WorkshopTypeList: React.FC = () => {
       disableClickEventBubbling: true,
       renderCell: (params: CellParams) => {
         const onClick = () => {
-          console.log(params.data.id);
+          console.log(params.row.id);
         };
         return (
           <MyButtonGroup
             deleteCB={() => {
-              clickDelete(params.data.id);
+              clickDelete(params.row.id);
             }}
-            editLink={'/admin/update_workshop_type/' + params.data.id}
+            editLink={'/admin/update_workshop_type/' + params.row.id}
             modalBody='Czy na pewmo chcesz usunąć typ pracowni z bazy?'
             modalTitle='Usuń typ pracowni'
           />

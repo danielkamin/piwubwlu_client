@@ -54,6 +54,7 @@ const NewMachine: React.FC = () => {
         <Formik
           validateOnChange={true}
           initialValues={{
+            id: 0,
             name: '',
             english_name: '',
             timeUnit: '',

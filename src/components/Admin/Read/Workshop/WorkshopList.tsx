@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getData, deleteData } from '../../Api/index';
+import { getData, deleteData } from '../../../../api/index';
 import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid';
-import MyButtonGroup from '../Utils/Buttons/MyButtonGroup';
-import { getAccessToken } from '../../Helpers/accessToken';
+import MyButtonGroup from '../../../Shared/Groups/MyButtonGroup';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { IWorkshopDetails } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
+import { IWorkshop } from '../../types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 const WorkshopList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [workshops, setWorkshops] = useState<IWorkshopDetails[] | any>([]);
+  const [workshops, setWorkshops] = useState<IWorkshop[] | any>([]);
   const context = useAlertContext();
   useEffect(() => {
     getWorkshops();
   }, []);
   const getWorkshops = async () => {
-    const response = await getData('workshops', getAccessToken())
+    await getData('workshops', getAccessToken())
       .then((res) => {
         setWorkshops(res);
         setLoading(false);
@@ -41,7 +41,7 @@ const WorkshopList: React.FC = () => {
       headerName: 'Identyfikator',
       width: 60,
       renderCell: (params: CellParams) => {
-        return <Link to={'/admin/workshop/' + params.data.id}>{params.data.id}</Link>;
+        return <Link to={'/admin/workshop/' + params.row.id}>{params.row.id}</Link>;
       }
     },
     { field: 'name', headerName: 'Nazwa', width: 250 },
@@ -58,9 +58,9 @@ const WorkshopList: React.FC = () => {
         return (
           <MyButtonGroup
             deleteCB={() => {
-              clickDelete(params.data.id);
+              clickDelete(params.row.id);
             }}
-            editLink={'/admin/update_workshop/' + params.data.id}
+            editLink={'/admin/update_workshop/' + params.row.id}
             modalBody='Czy na pewmo chcesz usunąć pracownie z bazy?'
             modalTitle='Usuń pracownię'
           />

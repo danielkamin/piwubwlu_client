@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import { putData, getData, postImage } from '../../Api/index';
+import { putData, getData, postImage } from '../../../../api/index';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { IMachine, MachineSchema, IWorkshop } from './types';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { IMachine, IWorkshop } from '../../types';
+import { MachineSchema } from '../../schemas';
 import { Button, TextField, Container, InputLabel, Avatar, CssBaseline, FormHelperText, NativeSelect, Paper, FormControlLabel, FormControl, Checkbox, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import ImageUpload from '../Utils/Buttons/ImageUpload';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import { Params } from '../../Helpers/types';
-import { TimeUnit } from '../../Helpers/types';
-import { API_URL } from '../../Helpers/constants';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
-import useStyles from '../Login/styles';
+import ImageUploadButton from '../../../Shared/Buttons/ImageUploadButton';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { Params } from '../../../../utils/types';
+import { API_URL, TimeUnit } from '../../../../utils/constants';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import useStyles from '../../styles';
 import EditIcon from '@material-ui/icons/Edit';
+
 const UpdateMachine: React.FC = () => {
   const context = useAlertContext();
   const classes = useStyles();
@@ -23,7 +24,7 @@ const UpdateMachine: React.FC = () => {
   const [currentPhoto, setCurrentPhoto] = useState<string>('');
   const [workshopList, setWorkshopList] = useState<IWorkshop[]>([]);
   const inputImage = useRef<HTMLInputElement>(null);
-  const [currentMachine, setCurrentMachine] = useState<IMachine>({ name: '', english_name: '', timeUnit: '', maxUnit: 0, machineState: false, workshopId: '' });
+  const [currentMachine, setCurrentMachine] = useState<IMachine>({ id: 0, name: '', english_name: '', timeUnit: '', maxUnit: 0, machineState: false, workshopId: 0 });
   useEffect(() => {
     getFormData();
   }, []);
@@ -114,7 +115,7 @@ const UpdateMachine: React.FC = () => {
                   ))}
                 </Field>
               </FormControl>
-              <ImageUpload currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
+              <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' disabled={isSubmitting} color='primary'>
                 Aktualizuj
               </Button>

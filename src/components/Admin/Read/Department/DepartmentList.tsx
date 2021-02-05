@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { getData, deleteData } from '../../Api/index';
-import MyButtonGroup from '../Utils/Buttons/MyButtonGroup';
+import { getData, deleteData } from '../../../../api/index';
+import MyButtonGroup from '../../../Shared/Groups/MyButtonGroup';
 import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid';
-import { IDepartmentDetails } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
-import { getAccessToken } from '../../Helpers/accessToken';
+import { IDepartment } from '../../types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
 const DepartmentList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const context = useAlertContext();
-  const [departments, setDepartments] = useState<IDepartmentDetails[]>([]);
+  const [departments, setDepartments] = useState<IDepartment[]>([]);
   useEffect(() => {
     getDepartments();
   }, []);
@@ -36,9 +36,9 @@ const DepartmentList: React.FC = () => {
         return (
           <MyButtonGroup
             deleteCB={() => {
-              clickDelete(params.data.id);
+              clickDelete(params.row.id);
             }}
-            editLink={'/admin/update_department/' + params.data.id}
+            editLink={'/admin/update_department/' + params.row.id}
             modalBody='Czy na pewmo chcesz usunąć tą katedrę z bazy?'
             modalTitle='Usuń katedrę'
           />

@@ -1,19 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { putData, getData, postImage } from '../../Api/index';
-import { Params } from '../../Helpers/types';
-import ImageUpload from '../Utils/Buttons/ImageUpload';
+import { putData, getData, postImage } from '../../../../api/index';
+import { Params } from '../../../../utils/types';
+import ImageUploadButton from '../../../Shared/Buttons/ImageUploadButton';
 import { useHistory, useParams } from 'react-router-dom';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { ILab, IWorkshopType, IEmployee, WorkshopSchema, WorkshopForm } from './types';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { ILab, IWorkshopType, IEmployee, IWorkshop } from '../../types';
+import { WorkshopSchema } from '../../schemas';
 import { Button, TextField, Container, InputLabel, FormControl, Paper, FormGroup, IconButton, Avatar, Typography, CssBaseline, NativeSelect } from '@material-ui/core';
 import { Formik, Form, Field, FieldArray } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { API_URL } from '../../Helpers/constants';
+import { API_URL } from '../../../../utils/constants';
 import ClearIcon from '@material-ui/icons/Clear';
 import EditIcon from '@material-ui/icons/Edit';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
-import useStyles from '../Login/styles';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import useStyles from '../../styles';
+interface Workshop extends IWorkshop {
+  Employees: IEmployee[];
+}
 const UpdateWorkshop: React.FC = () => {
   const history = useHistory();
   const { id } = useParams<Params>();
@@ -22,7 +26,7 @@ const UpdateWorkshop: React.FC = () => {
   const [currentPhoto, setCurrentPhoto] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [wTypes, setWTypes] = useState<IWorkshopType[]>([]);
-  const [currentWorkshop, setCurrenWorkshop] = useState<WorkshopForm>({ name: '', english_name: '', labId: 0, typeId: 0, room_number: 0, Employees: [] });
+  const [currentWorkshop, setCurrenWorkshop] = useState<Workshop>({ id: 0, name: '', english_name: '', labId: 0, typeId: 0, room_number: '', Employees: [], imagePath: '' });
   const [employees, setEmployees] = useState<IEmployee[]>([]);
   const inputImage = useRef<HTMLInputElement>(null);
   const context = useAlertContext();
@@ -156,7 +160,7 @@ const UpdateWorkshop: React.FC = () => {
                   )}
                 </FieldArray>
               </FormGroup>
-              <ImageUpload currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
+              <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' disabled={isSubmitting} color='primary'>
                 Aktualizuj Pracownię
               </Button>

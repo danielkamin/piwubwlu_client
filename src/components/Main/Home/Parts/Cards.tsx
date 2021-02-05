@@ -1,7 +1,6 @@
 import React from 'react';
-import HomeCard from './Resources/HomeCard';
-import { Grid } from '@material-ui/core';
-import { API_URL } from '../../Helpers/constants';
+import HomeCard from './HomeCard';
+import { API_URL } from '../../../../utils/constants';
 interface CardInfo {
   title: string;
   details: string;

@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { putData, getData } from '../../Api/index';
+import { putData, getData } from '../../../../api/index';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { getAccessToken } from '../../Helpers/accessToken';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { IWorkshopType, WorkshopTypeSchema } from './types';
+import { IWorkshopType } from '../../types';
+import { WorkshopTypeSchema } from '../../schemas';
 import { Button, TextField, Container, Avatar, Typography, CssBaseline, Paper } from '@material-ui/core';
 import { Formik, Form } from 'formik';
-import MyTextField from '../Utils/Inputs/MyTextField';
-import { Params } from '../../Helpers/types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
-import useStyles from '../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { Params } from '../../../../utils/types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
 
 const NewWorkshopType: React.FC = () => {
   const context = useAlertContext();
   const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(true);
-  const [currentWorkshopType, setCurrentWorkshopType] = useState<IWorkshopType>({ name: '', english_name: '', symbol: '' });
+  const [currentWorkshopType, setCurrentWorkshopType] = useState<IWorkshopType>({ id: 0, name: '', english_name: '', symbol: '' });
   const { id } = useParams<Params>();
   useEffect(() => {
     getWorkshopType();
@@ -29,7 +30,7 @@ const NewWorkshopType: React.FC = () => {
   };
   const history = useHistory();
   const newWorkshopType = async (values: IWorkshopType) => {
-    const res = await putData('workshopTypes/' + id, getAccessToken(), values);
+    await putData('workshopTypes/' + id, getAccessToken(), values);
     context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano typ pracowni w bazy!');
     history.push('/admin/workshop_types');
   };
@@ -51,7 +52,7 @@ const NewWorkshopType: React.FC = () => {
         </Typography>
         <Formik
           validateOnChange={true}
-          initialValues={{ name: currentWorkshopType.name, english_name: currentWorkshopType.english_name, symbol: currentWorkshopType.symbol }}
+          initialValues={{ id: 0, name: currentWorkshopType.name, english_name: currentWorkshopType.english_name, symbol: currentWorkshopType.symbol }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             newWorkshopType(data);

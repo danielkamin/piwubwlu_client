@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Container, Typography } from '@material-ui/core';
-import Cards from './Cards';
+import Cards from './Parts/Cards';
 import Banner from './Parts/Banner';
 import useStyles from './styles';
 const Home: React.FC = () => {

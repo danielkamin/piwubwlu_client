@@ -1,23 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { putData, getData } from '../../../Api/index';
+import { putData, getData } from '../../../../api/index';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { IEmployeeForm, GuestSchema, Department } from '../types';
+import { IEmployee, IDepartment } from '../../types';
+import { UserSchema } from '../../schemas';
 import { Button, TextField, Paper, Container, Grid, Checkbox, FormControlLabel, Typography, FormControl, InputLabel, NativeSelect, CssBaseline, Avatar } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
-import MyTextField from '../../Utils/Inputs/MyTextField';
-import { Params } from '../../../Helpers/types';
-import useStyles from '../../Login/styles';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { Params } from '../../../../utils/types';
+import useStyles from '../../styles';
 import EditIcon from '@material-ui/icons/Edit';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+
 const UpdateEmployee: React.FC = () => {
   const classes = useStyles();
   const context = useAlertContext();
   const [loading, setLoading] = useState<boolean>(true);
-  const [departmentList, setDepartmentList] = useState<Department[]>([]);
-  const [currentEmp, setCurrentEmp] = useState<IEmployeeForm>({ firstName: '', lastName: '', password: '', repeatPassword: '', email: '', setEmployee: true, departmentId: '' });
+  const [departmentList, setDepartmentList] = useState<IDepartment[]>([]);
+  const [currentEmp, setCurrentEmp] = useState<IEmployee>({
+    id: 0,
+    firstName: '',
+    lastName: '',
+    password: '',
+    repeatPassword: '',
+    email: '',
+    setEmployee: true,
+    Employee: {
+      departmentId: 0
+    }
+  });
   const history = useHistory();
   const { id } = useParams<Params>();
   useEffect(() => {
@@ -26,10 +39,21 @@ const UpdateEmployee: React.FC = () => {
   const getEmp = async () => {
     const [emp, depList] = await Promise.all([getData('employees/' + id, getAccessToken()), getData('departments/list', getAccessToken())]);
     setDepartmentList(depList);
-    setCurrentEmp({ firstName: emp.User.firstName, lastName: emp.User.lastName, email: emp.User.email, password: '', repeatPassword: '', setEmployee: true, departmentId: emp.departmentId });
+    setCurrentEmp({
+      id: +id,
+      firstName: emp.User.firstName,
+      lastName: emp.User.lastName,
+      email: emp.User.email,
+      password: '',
+      repeatPassword: '',
+      setEmployee: true,
+      Employee: {
+        departmentId: 0
+      }
+    });
     setLoading(false);
   };
-  const updateEmp = async (values: IEmployeeForm) => {
+  const updateEmp = async (values: any) => {
     await putData('employees/' + id, getAccessToken(), values)
       .then(() => {
         context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano pracownika');
@@ -63,14 +87,14 @@ const UpdateEmployee: React.FC = () => {
             password: currentEmp.password,
             repeatPassword: currentEmp.repeatPassword,
             setEmployee: currentEmp.setEmployee,
-            departmentId: currentEmp.departmentId
+            departmentId: currentEmp.Employee.departmentId
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             updateEmp(data);
             setSubmitting(false);
           }}
-          validationSchema={GuestSchema}
+          validationSchema={UserSchema}
         >
           {({ values, isSubmitting }) => (
             <Form className='form-grid'>

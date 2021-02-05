@@ -1,15 +1,12 @@
 import React from 'react';
-
 import { Container } from '@material-ui/core';
 import WorkshopTypeList from './WorkshopTypeList';
-import AddButton from '../Utils/Buttons/AddButton';
-interface Props {}
+import NewResourceButton from '../../../Shared/Buttons/NewResourceButton';
 
-const WorkshopTypes: React.FC<Props> = () => {
+const WorkshopTypes: React.FC = () => {
   return (
     <Container maxWidth='lg'>
-      <AddButton link='/admin/new_workshop_type' message='Nowy Typ Pracowni' />
-
+      <NewResourceButton link='/admin/new_workshop_type' message='Nowy Typ Pracowni' />
       <WorkshopTypeList />
     </Container>
   );

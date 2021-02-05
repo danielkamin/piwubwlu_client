@@ -1,14 +1,14 @@
 import React, { ReactText } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@material-ui/core';
-import { getAccessToken } from '../../../Helpers/accessToken';
-import { Reservation, ReservationState } from '../types';
-import useStyles from '../styles';
-import { postData, deleteData } from '../../../Api/index';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { Reservation, ReservationState } from '../../types';
+import useStyles from '../../styles';
+import { postData, deleteData } from '../../../../api/index';
 import { Link } from 'react-router-dom';
-import RentAction from './RentAction';
+import RentAction from './Parts/RentAction';
 import format from 'date-fns/format';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
-import DeleteModal from '../../Utils/DeleteModal';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import DeleteModal from '../../../Shared/Modal/DeleteModal';
 interface Props {
   data: Reservation[];
   supervised?: boolean;

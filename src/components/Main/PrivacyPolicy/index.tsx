@@ -1,8 +1,6 @@
 import React from 'react';
 import { Container, Typography, Paper } from '@material-ui/core';
-interface Props {}
-
-const Regulations: React.FC<Props> = () => {
+const Regulations: React.FC = () => {
   return (
     <Container maxWidth='md'>
       <div className='container-spacing'>

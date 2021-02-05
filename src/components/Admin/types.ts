@@ -3,13 +3,14 @@ type Employee = {
     id?:number,
     departmentId?:number
 }
+
 export interface IUser {
-    id?:number;
+    id:number;
     firstName:string;
     lastName:string;
     email:string;
-    password:string;
-    repeatPassword:string;
+    password?:string;
+    repeatPassword?:string;
     setEmployee:boolean;
 }
 
@@ -22,24 +23,24 @@ export interface IEmployee extends IUser {
 }
 
 export interface IWorkshop {
-    id?:number;
+    id:number;
     name: string;
     english_name: string;
     room_number: string;
     labId: number;
     typeId: number;
-    imagePath:string;
+    imagePath?:string;
 }
 
 export interface IWorkshopType {
-    id?:number;
+    id:number;
     name: string;
     english_name: string;
     symbol:string;
 }
 
 export interface IMachine {
-    id?:number;
+    id:number;
     name: string;
     english_name: string;
     timeUnit:string;
@@ -49,7 +50,7 @@ export interface IMachine {
 }
 
 export interface ILab {
-    id?:number;
+    id:number;
     name: string;
     english_name: string;
     employeeId?:number;
@@ -64,7 +65,7 @@ export interface IReservation {
 }
 
 export interface IDepartment {
-    id?:number;
+    id:number;
     name: string;
     english_name: string;
 }

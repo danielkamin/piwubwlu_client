@@ -1,30 +1,30 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { authRoute } from '../../../Api/index';
-import MyTextField from '../../Utils/Inputs/MyTextField';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { authRoute } from '../../../../api/index';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import { Button, Container, TextField, Paper, Avatar, Typography, CssBaseline } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { logout } from '../../Nav/Logout';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
+import { logout } from '../../Auth/Logout/logout';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
-import useStyles from '../../Login/styles';
-import { IPasswordForm, ChangePasswordSchema } from '../types';
-interface Props {}
+import useStyles from '../../styles';
+import { NewPasswordForm } from '../../types';
+import { PasswordSchema } from '../../schemas';
 
-const DeleteAccount: React.FC<Props> = () => {
+const DeleteAccount: React.FC = () => {
   const context = useAlertContext();
   const classes = useStyles();
   const history = useHistory();
-  const deleteAccount = async (data: IPasswordForm) => {
+  const deleteAccount = async (data: NewPasswordForm) => {
     await authRoute('delete_account', data, getAccessToken())
       .then(async (res) => {
         await logout();
-        context.openAlert(AlertType.warning, 'Pomyślnie usunięto konto');
+        context.openAlert(AlertType.success, 'Pomyślnie usunięto konto');
         history.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        context.openAlert(AlertType.error, err);
       });
   };
 
@@ -41,7 +41,7 @@ const DeleteAccount: React.FC<Props> = () => {
         </Typography>
         <Formik
           validateOnChange={true}
-          validationSchema={ChangePasswordSchema}
+          validationSchema={PasswordSchema}
           initialValues={{
             password: '',
             repeatPassword: ''

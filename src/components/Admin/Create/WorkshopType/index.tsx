@@ -32,7 +32,7 @@ const NewWorkshopType: React.FC = () => {
         </Typography>
         <Formik
           validateOnChange={true}
-          initialValues={{ name: '', english_name: '', symbol: '' }}
+          initialValues={{ name: '', english_name: '', symbol: '', id: 0 }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             newWorkshopType(data);

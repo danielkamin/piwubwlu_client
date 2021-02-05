@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getData, deleteData } from '../../Api/index';
-import MyButtonGroup from '../Utils/Buttons/MyButtonGroup';
+import { getData, deleteData } from '../../../../api/index';
+import MyButtonGroup from '../../../Shared/Groups/MyButtonGroup';
 import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid';
-import { getAccessToken } from '../../Helpers/accessToken';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { ILabDetails } from './types';
-import { useAlertContext, AlertType } from '../Context/AlertContext';
+import { ILab } from '../../types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 const LabList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [labs, setLabs] = useState<ILabDetails[]>([]);
+  const [labs, setLabs] = useState<ILab[]>([]);
   const context = useAlertContext();
   useEffect(() => {
     getLabs();
@@ -36,7 +36,7 @@ const LabList: React.FC = () => {
       headerName: 'Identyfikator',
       width: 130,
       renderCell: (params: CellParams) => {
-        return <Link to={'/admin/lab/' + params.data.id}>{params.data.id}</Link>;
+        return <Link to={'/admin/lab/' + params.row.id}>{params.row.id}</Link>;
       }
     },
     { field: 'name', headerName: 'Nazwa', width: 130 },
@@ -51,9 +51,9 @@ const LabList: React.FC = () => {
         return (
           <MyButtonGroup
             deleteCB={() => {
-              clickDelete(params.data.id);
+              clickDelete(params.row.id);
             }}
-            editLink={'/admin/update_lab/' + params.data.id}
+            editLink={'/admin/update_lab/' + params.row.id}
             modalBody='Czy na pewmo chcesz usunąć to laboratorium z bazy?'
             modalTitle='Usuń laboratorium'
           />

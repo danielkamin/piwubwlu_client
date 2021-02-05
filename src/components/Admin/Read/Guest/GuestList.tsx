@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { getData, deleteData } from '../../../Api/index';
-import MyButtonGroup from '../../Utils/Buttons/MyButtonGroup';
+import { getData, deleteData } from '../../../../api/index';
+import MyButtonGroup from '../../../Shared/Groups/MyButtonGroup';
 import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { IGuest } from '../types';
-interface Props {}
-
-const GuestList: React.FC<Props> = () => {
+import { IGuest } from '../../types';
+const GuestList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [guests, setGuests] = useState<[]>([]);
+  const [guests, setGuests] = useState<IGuest[]>([]);
   useEffect(() => {
     getGuests();
   }, []);
   const getGuests = async () => {
     const response = await getData('guests/list', getAccessToken());
-    const newGuests: [] = response.map((res: IGuest) => ({
+    const newGuests: [] = response.map((res: any) => ({
       firstName: res.firstName,
       lastName: res.lastName,
       id: res.id,
@@ -45,9 +43,9 @@ const GuestList: React.FC<Props> = () => {
         return (
           <MyButtonGroup
             deleteCB={() => {
-              clickDelete(params.data.id);
+              clickDelete(params.row.id);
             }}
-            editLink={'/admin/update_guest/' + params.data.id}
+            editLink={'/admin/update_guest/' + params.row.id}
             modalBody='Czy na pewmo chcesz usunąć to konto gościa z bazy?'
             modalTitle='Usuń gościa'
           />

@@ -1,3 +1,6 @@
+/**
+ * URL id parameter interface
+ */
 export type Params = {
     id: string;
   };
@@ -15,4 +18,3 @@ export type Params = {
     employee:'EMPLOYEE',
     regular:'REGULAR'
   }
-  

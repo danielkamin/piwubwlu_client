@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getData, deleteData } from '../../../Api/index';
-import { DataGrid, ColDef, CellParams, ValueFormatterParams } from '@material-ui/data-grid';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { getData } from '../../../../api/index';
+import { DataGrid, ColDef, CellParams } from '@material-ui/data-grid';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
-import { Reservation } from '../types';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import format from 'date-fns/format';
 interface Props {}
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardMedia, CardActionArea, CardContent, Typography, Button, CardActions } from '@material-ui/core';
-import useStyles from './styles';
+import { Card, CardMedia, CardActionArea, CardContent, Typography } from '@material-ui/core';
+import useStyles from '../styles';
 
 interface Props {
   title: string;

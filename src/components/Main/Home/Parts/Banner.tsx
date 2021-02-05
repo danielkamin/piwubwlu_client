@@ -1,9 +1,7 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
 
-interface Props {}
-
-const Banner: React.FC<Props> = () => {
+const Banner: React.FC = () => {
   return (
     <div className='landing'>
       <div className='banner black-hidden'>

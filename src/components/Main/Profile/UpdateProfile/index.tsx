@@ -1,30 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getData, postData, postImage } from '../../../Api/index';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { getData, postData, postImage } from '../../../../api/index';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import { CircularProgress, Button, Avatar, Container, TextField, Typography, Paper, CssBaseline } from '@material-ui/core';
-import MyTextField from '../../Utils/Inputs/MyTextField';
-import MyTextArea from '../../Utils/Inputs/MyTextArea';
-import { ProfileSchema, Employee } from '../types';
+import MyTextField from '../../../Shared/Inputs/MyTextField';
+import MyTextArea from '../../../Shared/Inputs/MyTextArea';
+import { IProfile } from '../../types';
+import { ProfileSchema } from '../../schemas';
 import { Formik, Form } from 'formik';
-import { API_URL } from '../../../Helpers/constants';
-import { useAlertContext, AlertType } from '../../Context/AlertContext';
-import useStyles from '../../Login/styles';
+import { API_URL } from '../../../../utils/constants';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
+import useStyles from '../../styles';
 import ImageIcon from '@material-ui/icons/Image';
-
-interface Profile {
-  firstName: string;
-  lastName: string;
-  email: string;
-  name: string;
-  Employee: Employee | null;
-}
 
 const MyProfile: React.FC = () => {
   const classes = useStyles();
   const context = useAlertContext();
   const [loading, setLoading] = useState<boolean>(true);
   const inputImage = useRef<HTMLInputElement>(null);
-  const [profileData, setProfileData] = useState<Profile>(() => {
+  const [profileData, setProfileData] = useState<IProfile>(() => {
     return { firstName: '', lastName: '', email: '', name: '', Employee: null };
   });
   const [currentPhoto, setCurrentPhoto] = useState<string>('');

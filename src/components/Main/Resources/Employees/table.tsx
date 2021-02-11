@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { getData } from '../../../Api/index';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Avatar, Paper, TextField } from '@material-ui/core';
-import { getAccessToken } from '../../../Helpers/accessToken';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { Employee } from '../Employee/types';
-import useStyles from '../Employee/styles';
-import { StyledTableCell, StyledTableRow } from '../../Utils/Table/StyledTable';
-import { API_URL } from '../../../Helpers/constants';
+import { IEmployee } from '../../types';
+import useStyles from '../../styles';
+import { API_URL } from '../../../../utils/constants';
 interface Props {
-  Employees: Employee[];
+  Employees: IEmployee[];
 }
 
 const EmployeeTable: React.FC<Props> = ({ Employees }) => {
@@ -19,22 +15,22 @@ const EmployeeTable: React.FC<Props> = ({ Employees }) => {
       <Table>
         <TableHead>
           <TableRow>
-            <StyledTableCell></StyledTableCell>
-            <StyledTableCell>Imię</StyledTableCell>
-            <StyledTableCell>Nazwisko</StyledTableCell>
-            <StyledTableCell>Katedra</StyledTableCell>
+            <TableCell></TableCell>
+            <TableCell>Imię</TableCell>
+            <TableCell>Nazwisko</TableCell>
+            <TableCell>Katedra</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {Employees.map((row) => (
-            <StyledTableRow key={row.userId}>
+            <TableRow key={row.id}>
               <TableCell>
-                <Link to={'/kadra/' + row.userId}>{row.User.picturePath !== null ? <Avatar src={API_URL + '/' + row.User.picturePath} /> : <Avatar />}</Link>
+                <Link to={'/kadra/' + row.id}>{row.picturePath !== null ? <Avatar src={API_URL + '/' + row.picturePath} /> : <Avatar />}</Link>
               </TableCell>
-              <TableCell>{row.User.firstName}</TableCell>
-              <TableCell>{row.User.lastName}</TableCell>
-              <TableCell>{row.Department !== null ? row.Department.name : ' '}</TableCell>
-            </StyledTableRow>
+              <TableCell>{row.firstName}</TableCell>
+              <TableCell>{row.lastName}</TableCell>
+              <TableCell>{row.Employee?.Department.name !== null ? row.Employee?.Department.name : ' '}</TableCell>
+            </TableRow>
           ))}
         </TableBody>
       </Table>

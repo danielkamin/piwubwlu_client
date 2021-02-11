@@ -1,0 +1,1 @@
+export {default as AdminLogout} from '../components/Admin/Auth/index'

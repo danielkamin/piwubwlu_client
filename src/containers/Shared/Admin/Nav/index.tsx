@@ -1,12 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppBar, CssBaseline, Divider, Drawer, Hidden, IconButton, List, Toolbar, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import useStyles from '../styles';
-import { logout } from '../../Nav/Logout';
-import { useUserContext } from '../../Context/UserContext';
+import useStyles from '../../../styles';
+import { logout } from '../../../../components/Main/Auth/Logout/logout';
+import { useUserContext } from '../../../../context/UserContext';
 import Links from './Links';
 import { Link } from 'react-router-dom';
 interface Props {

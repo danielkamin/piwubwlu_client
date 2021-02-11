@@ -1,9 +1,9 @@
 import React from 'react';
-import Nav from './Nav';
+import Nav from '../../Shared/Main/Nav';
 import { makeStyles, Theme, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Footer from '../Footer';
-import { useUserContext } from '../../Context/UserContext';
-import CustomTheme from '../../../Helpers/theme';
+import Footer from '../../Shared/Main/Footer';
+import { useUserContext } from '../../../context/UserContext';
+import CustomTheme from '../../../assets/Styles/theme';
 interface Props {
   children?: any;
 }

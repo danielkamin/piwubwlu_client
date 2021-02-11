@@ -2,7 +2,7 @@ import React from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import useStyles from '../../../Helpers/styles';
+import useStyles from '../styles';
 interface Props {
   link: string;
   message: string;

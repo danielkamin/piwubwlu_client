@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getData } from '../../Api/index';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { CircularProgress, Container, Paper, Typography, Avatar } from '@material-ui/core';
-import MachineCalendar from './MachineCalendar';
-import { IMachineDetails } from './types';
-import useStyles from '../../Helpers/styles';
-import { useUserContext } from '../Context/UserContext';
-import { API_URL } from '../../Helpers/constants';
+import { getData } from '../../../../api/index';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { CircularProgress, Container, Typography, Avatar } from '@material-ui/core';
+import MachineCalendar from './Calendar';
+import { IMachineDetails } from '../../types';
+import useStyles from '../../styles';
+import { useUserContext } from '../../../../context/UserContext';
+import { API_URL } from '../../../../utils/constants';
 import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 interface Params {
   id: string;

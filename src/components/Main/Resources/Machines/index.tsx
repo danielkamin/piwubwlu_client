@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import SortData from '../../../Shared/Groups/SortData';
 import { ICardInfo } from '../../types';
 import PageTitle from '../../../Shared/Display/PageTitle';
-const DisplayMachines: React.FC = (props) => {
+const DisplayMachines: React.FC = () => {
   const history = useHistory();
   const { search } = useLocation();
   const query = queryString.parse(search);

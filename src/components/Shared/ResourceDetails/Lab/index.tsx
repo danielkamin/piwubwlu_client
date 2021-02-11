@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { getData } from '../../Api/index';
-import { getAccessToken } from '../../Helpers/accessToken';
+import { getData } from '../../../../api/index';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link, useParams } from 'react-router-dom';
-import { DisplayLab } from './types';
+import { ILabDetails } from '../../types';
 import { Container, Typography, Paper } from '@material-ui/core';
 interface Params {
   id: string;
 }
 const LabDetails: React.FC = () => {
   const { id } = useParams<Params>();
-  const [labDetails, setLabDetails] = useState<DisplayLab>();
+  const [labDetails, setLabDetails] = useState<ILabDetails>();
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     getLabDetails();

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { getData } from '../../Api/index';
-import { getAccessToken } from '../../Helpers/accessToken';
+import { getData } from '../../../../api/index';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import { CircularProgress, Paper, Grid, Container, Typography } from '@material-ui/core';
 import { useParams, Link } from 'react-router-dom';
-import { DisplayWorkshop } from './types';
-import { Params } from '../../Helpers/types';
-import useStyles from '../../Helpers/styles';
-import { API_URL } from '../../Helpers/constants';
+import { IWorkshopDetails } from '../../types';
+import { Params } from '../../../../utils/types';
+import useStyles from '../../styles';
+import { API_URL } from '../../../../utils/constants';
 
 const WorkshopDetails: React.FC = () => {
   const { id } = useParams<Params>();
   const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(true);
-  const [workshopDetails, setWorkshopDetails] = useState<DisplayWorkshop>();
+  const [workshopDetails, setWorkshopDetails] = useState<IWorkshopDetails>();
   useEffect(() => {
     getWorkshop();
   }, []);

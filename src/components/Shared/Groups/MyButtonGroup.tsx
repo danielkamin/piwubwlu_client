@@ -3,7 +3,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import DeleteModal from '../DeleteModal';
+import DeleteModal from '../Modal/DeleteModal';
 interface Props {
   editLink: string;
   deleteCB: () => void;

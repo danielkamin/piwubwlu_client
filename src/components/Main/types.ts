@@ -21,6 +21,16 @@ type ReservationSurvey = {
     reservationId:number;
     comment:string;
 }
+type Employee = {
+    information:string;
+    title:string;
+    Department:Department;
+}
+export type Department = {
+    id:number;
+    name:string;
+    english_name:string;
+}
 export interface NewPasswordForm {
     password:string;
     repeatPassword:string;
@@ -41,11 +51,9 @@ export interface LoginValues {
 export interface IProfile {
     firstName:string;
     lastName:string;
-    email:string;
-    name:string;
-    Employee:{
-        information:string;
-    }|null
+    email?:string;
+    name?:string;
+    Employee?:Employee;
 }
 export interface Reservation {
     id:string; 
@@ -60,4 +68,8 @@ export interface ICardInfo {
     name: string;
     english_name: string;
     imagePath?: string;
+}
+export interface IEmployee extends IProfile{
+    picturePath?:string;
+    id:number;
 }

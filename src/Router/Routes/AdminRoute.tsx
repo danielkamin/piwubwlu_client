@@ -1,7 +1,7 @@
 import React from 'react';
-import { logout } from '../Components/Nav/Logout';
+import { logout } from '../../components/Main/Auth/Logout/logout';
 import { Route, Redirect } from 'react-router-dom';
-import { useUserContext } from '../Components/Context/UserContext';
+import { useUserContext } from '../../context/UserContext';
 
 interface Props {
   component: React.FC;

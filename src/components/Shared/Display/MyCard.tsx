@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardMedia, Typography, Button, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { IMediaCard } from '../../Helpers/types';
+import { ICardInfo } from '../types';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     width: 'auto'
   }
 }));
-interface Props extends IMediaCard {
+interface Props extends ICardInfo {
   linkTo: string;
 }
 const MyCard: React.FC<Props> = (props) => {

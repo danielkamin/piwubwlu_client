@@ -1,8 +1,6 @@
 import React from 'react';
 
-interface Props {}
-
-const SearchBar: React.FC<Props> = () => {
+const SearchBar: React.FC = () => {
   return <div></div>;
 };
 

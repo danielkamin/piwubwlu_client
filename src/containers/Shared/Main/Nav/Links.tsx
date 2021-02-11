@@ -1,10 +1,10 @@
 import { IconButton, Toolbar, Button } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { logout } from '../../Nav/Logout';
+import { logout } from '../../../../components/Main/Auth/Logout/logout';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import useStyles from '../styles';
-import { useUserContext } from '../../Context/UserContext';
+import useStyles from '../../../styles';
+import { useUserContext } from '../../../../context/UserContext';
 import { Link } from 'react-router-dom';
 import { AccountCircleOutlined } from '@material-ui/icons';
 const Links: React.FC = () => {

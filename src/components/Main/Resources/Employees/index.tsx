@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { getData } from '../../../Api/index';
+import { getData } from '../../../../api/index';
 import { TextField, Container, MenuItem } from '@material-ui/core';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Employee } from '../Employee/types';
-import PageTitle from '../../Utils/PageTitle';
-import { Department } from '../types';
-import EmployeeTable from './EmployeeTable';
+import { IEmployee } from '../../types';
+import PageTitle from '../../../Shared/Display/PageTitle';
+import { Department } from '../../types';
+import EmployeeTable from './table';
 const Employees: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [initialEmployees, setInitialEmployees] = useState<Employee[]>([]);
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [initialEmployees, setInitialEmployees] = useState<IEmployee[]>([]);
+  const [employees, setEmployees] = useState<IEmployee[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [filter, setFilter] = useState<string>('all');
   useEffect(() => {
@@ -26,7 +26,7 @@ const Employees: React.FC = () => {
   const filterEmployees = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value !== 'all') {
       let newEmployees = initialEmployees.filter((item) => {
-        if (item.Department !== null && item?.Department.name === e.target.value) return item;
+        if (item.Employee?.Department !== null && item?.Employee?.Department.name === e.target.value) return item;
       });
       setEmployees(newEmployees);
     } else setEmployees(initialEmployees);

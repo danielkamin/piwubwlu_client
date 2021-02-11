@@ -4,7 +4,7 @@ import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import AssignmentIcon from '@material-ui/icons/Assignment';
-import useStyles from '../styles';
+import useStyles from '../../../styles';
 import SupervisedUserCircleIcon from '@material-ui/icons/SupervisedUserCircle';
 
 const Links: React.FC = () => {

@@ -1,9 +1,8 @@
 import React from 'react';
-import AdminNav from './AdminNav';
-import { makeStyles, Theme, ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { useUserContext } from '../../Context/UserContext';
-import CustomTheme from '../../../Helpers/theme';
+import AdminNav from '../../Shared/Admin/Nav';
+import { makeStyles, Theme, ThemeProvider } from '@material-ui/core/styles';
+import { useUserContext } from '../../../context/UserContext';
+import CustomTheme from '../../../assets/Styles/theme';
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex'

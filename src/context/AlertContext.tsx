@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AlertInterface } from './types';
 import Alert from '@material-ui/lab/Alert';
-import { Fade, Snackbar, Collapse } from '@material-ui/core';
+import { Fade, Snackbar } from '@material-ui/core';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 export enum AlertType {
   error = 'error',

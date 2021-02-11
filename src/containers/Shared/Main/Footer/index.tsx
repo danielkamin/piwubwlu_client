@@ -1,9 +1,8 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
-import { API_URL } from '../../Helpers/constants';
-interface Props {}
+import { API_URL } from '../../../../utils/constants';
 
-const Footer: React.FC<Props> = () => {
+const Footer: React.FC = () => {
   return (
     <div className='footer'>
       <div className='content'>

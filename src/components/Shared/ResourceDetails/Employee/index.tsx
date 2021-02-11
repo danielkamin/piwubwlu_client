@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { getData } from '../../../Api/index';
-import { Avatar, Box, Container, Paper, Typography } from '@material-ui/core';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import React, { useState, useEffect } from 'react';
+import { getData } from '../../../../api/index';
+import { Avatar, Container, Paper, Typography } from '@material-ui/core';
+import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { useParams } from 'react-router-dom';
-import { Params } from '../../../Helpers/types';
-import { IEmployeeDetails } from '../types';
-import useStyles from '../../../Helpers/styles';
-import { API_URL } from '../../../Helpers/constants';
+import { Params } from '../../../../utils/types';
+import { IEmployee } from '../../../Main/types';
+import useStyles from '../../styles';
+import { API_URL } from '../../../../utils/constants';
 import ReCAPTCHA from 'react-google-recaptcha';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import customAxios from '../../../Helpers/customAxios';
+import customAxios from '../../../../utils/api/customAxios';
 const EmployeeDetails: React.FC = () => {
   const { id } = useParams<Params>();
   const classes = useStyles();
@@ -19,7 +19,7 @@ const EmployeeDetails: React.FC = () => {
   const [empEmail, setEmpEmail] = useState<String | null>(() => {
     return null;
   });
-  const [employeeDetails, setEmployeeDetails] = useState<IEmployeeDetails>();
+  const [employeeDetails, setEmployeeDetails] = useState<IEmployee>();
   useEffect(() => {
     getWorkshop();
   }, []);
@@ -49,23 +49,23 @@ const EmployeeDetails: React.FC = () => {
       <div className='container-spacing'>
         <Paper className={classes.paper}>
           <div>
-            {employeeDetails?.User.picturePath ? <Avatar src={API_URL + '/' + employeeDetails?.User.picturePath} className={classes.largeAvatar} /> : <Avatar className={classes.largeAvatar} />}
+            {employeeDetails?.picturePath ? <Avatar src={API_URL + '/' + employeeDetails?.picturePath} className={classes.largeAvatar} /> : <Avatar className={classes.largeAvatar} />}
             <Typography variant='h4' color='secondary'>
-              {employeeDetails?.User.lastName} {employeeDetails?.User.firstName}
+              {employeeDetails?.lastName} {employeeDetails?.firstName}
             </Typography>
           </div>
           <br></br>
 
-          {employeeDetails?.Department !== null ? (
+          {employeeDetails?.Employee?.Department !== null ? (
             <div>
               <Typography variant='subtitle1' color='textSecondary' paragraph={false}>
                 Katedra:
               </Typography>
-              <Typography variant='h6'>{employeeDetails?.Department.name}</Typography>
+              <Typography variant='h6'>{employeeDetails?.Employee?.Department.name}</Typography>
               <Typography variant='subtitle1' color='textSecondary' paragraph={false}>
                 Department:
               </Typography>
-              <Typography variant='h6'>{employeeDetails?.Department.english_name}</Typography>
+              <Typography variant='h6'>{employeeDetails?.Employee?.Department.english_name}</Typography>
             </div>
           ) : (
             <div>

@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel, FormControl, FormLabel, FormHelperText } from '@material-ui/core';
+import { Checkbox, FormControlLabel, FormControl, FormHelperText } from '@material-ui/core';
 import { FieldAttributes, useField } from 'formik';
 import React from 'react';
 

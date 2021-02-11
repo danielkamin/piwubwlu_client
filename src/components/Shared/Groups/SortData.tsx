@@ -1,12 +1,12 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Paper, Button, TextField, MenuItem, Select } from '@material-ui/core';
-import { IMediaCard } from '../../Helpers/types';
-import { API_URL } from '../../Helpers/constants';
-import MyCard from './MyCard';
+import { MenuItem, Select } from '@material-ui/core';
+import { ICardInfo } from '../types';
+import { API_URL } from '../../../utils/constants';
+import MyCard from '../Display/MyCard';
 interface Props {
   sortQuery: string | string[] | null;
-  data: IMediaCard[];
+  data: ICardInfo[];
   qQuery: string | string[] | null;
   linkString: string;
 }

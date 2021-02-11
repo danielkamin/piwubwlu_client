@@ -12,6 +12,5 @@ export const UserProvider: React.FC<Props> = (props) => {
     loggedIn: isAuth.loggedIn,
     roles: isAuth.roles
   };
-  console.log(isAuth);
   return <UserContext.Provider value={providerValue}>{props.children}</UserContext.Provider>;
 };

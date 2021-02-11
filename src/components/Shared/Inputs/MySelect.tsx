@@ -1,4 +1,4 @@
-import { NativeSelect, FormControlLabel, FormControl, InputLabel, FormHelperText } from '@material-ui/core';
+import { NativeSelect, FormControl, InputLabel, FormHelperText } from '@material-ui/core';
 import { FieldAttributes, useField } from 'formik';
 import React from 'react';
 

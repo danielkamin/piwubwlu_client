@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Button, Paper, Grid, Typography, CircularProgress, Avatar } from '@material-ui/core';
-import { getData, postData } from '../../Api/index';
-import { IReservationDetails, ReservationState } from './types';
-import { useParams, Link } from 'react-router-dom';
-import { getAccessToken } from '../../Helpers/accessToken';
-import { API_URL } from '../../Helpers/constants';
+import { Container, Typography, CircularProgress, Avatar } from '@material-ui/core';
+import { getData } from '../../../../api/index';
+import { IReservationDetails } from '../../types';
+import { useParams } from 'react-router-dom';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { API_URL } from '../../../../utils/constants';
 import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 import format from 'date-fns/format';
-import useStyles from '../../Helpers/styles';
-import UpdateReservation from './Main/UpdateReservation';
+import useStyles from '../../styles';
+import UpdateReservation from './updateReservation';
 type Params = {
   id: string;
 };

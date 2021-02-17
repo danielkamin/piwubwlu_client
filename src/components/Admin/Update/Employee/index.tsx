@@ -6,7 +6,7 @@ import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { IEmployee, IDepartment } from '../../types';
 import { UserSchema } from '../../schemas';
-import { Button, TextField, Paper, Container, Grid, Checkbox, FormControlLabel, Typography, FormControl, InputLabel, NativeSelect, CssBaseline, Avatar } from '@material-ui/core';
+import { Button, TextField, Paper, Container, Checkbox, FormControlLabel, Typography, FormControl, InputLabel, NativeSelect, CssBaseline, Avatar } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import MyTextField from '../../../Shared/Inputs/MyTextField';
 import { Params } from '../../../../utils/types';
@@ -16,7 +16,7 @@ import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 
 const UpdateEmployee: React.FC = () => {
   const classes = useStyles();
-  const context = useAlertContext();
+  const alertContext = useAlertContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [departmentList, setDepartmentList] = useState<IDepartment[]>([]);
   const [currentEmp, setCurrentEmp] = useState<IEmployee>({
@@ -41,14 +41,14 @@ const UpdateEmployee: React.FC = () => {
     setDepartmentList(depList);
     setCurrentEmp({
       id: +id,
-      firstName: emp.User.firstName,
-      lastName: emp.User.lastName,
-      email: emp.User.email,
+      firstName: emp.firstName,
+      lastName: emp.lastName,
+      email: emp.email,
       password: '',
       repeatPassword: '',
       setEmployee: true,
       Employee: {
-        departmentId: 0
+        departmentId: emp.Employee.Department ? emp.Employee.Department.id : 0
       }
     });
     setLoading(false);
@@ -56,10 +56,10 @@ const UpdateEmployee: React.FC = () => {
   const updateEmp = async (values: any) => {
     await putData('employees/' + id, getAccessToken(), values)
       .then(() => {
-        context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano pracownika');
+        alertContext.openAlert(AlertType.success, 'Pomyślnie zaktualizowano pracownika');
         history.push('/admin/employees');
       })
-      .catch((err) => context.openAlert(AlertType.warning, err));
+      .catch((err) => alertContext.openAlert(AlertType.warning, err));
   };
   if (loading)
     return (

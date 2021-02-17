@@ -74,7 +74,7 @@ export const TimeUnit = {
     15:'15',30:'30',45:'45',60:'60'
   }
 export interface ILogin {
-    name: string;
+    email: string;
     password: string;
   }
   

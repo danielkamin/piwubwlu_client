@@ -42,6 +42,6 @@ export const DepartmentSchema = yup.object({
     english_name: yup.string().required('Name is required')
   });
 export const LoginSchema = yup.object({
-    name: yup.string().required('Nazwa jest wymagana'),
+  email: yup.string().email('Wprowadź swój adres e-mail zgodnie z formatem: yourname@example.com').required('E-Mail jest wymagany'),
     password: yup.string().required('Hasło jest wymagane')
   });

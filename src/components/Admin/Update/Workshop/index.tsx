@@ -29,7 +29,7 @@ const UpdateWorkshop: React.FC = () => {
   const [currentWorkshop, setCurrenWorkshop] = useState<Workshop>({ id: 0, name: '', english_name: '', labId: 0, typeId: 0, room_number: '', Employees: [], imagePath: '' });
   const [employees, setEmployees] = useState<IEmployee[]>([]);
   const inputImage = useRef<HTMLInputElement>(null);
-  const context = useAlertContext();
+  const alertContext = useAlertContext();
   useEffect(() => {
     getFormData();
   }, []);
@@ -44,7 +44,6 @@ const UpdateWorkshop: React.FC = () => {
     setWTypes(tempTypes);
     setLabs(tempLabs);
     setEmployees(tempEmployees);
-    console.log(tempEmployees);
     setCurrenWorkshop(tempWorkshop);
     setCurrentPhoto(API_URL + '/' + tempWorkshop.imagePath);
     setLoading(false);
@@ -52,15 +51,17 @@ const UpdateWorkshop: React.FC = () => {
   const HandleFileUpload = () => {
     setCurrentPhoto(URL.createObjectURL(inputImage.current?.files![0]));
   };
-  const putWorkshop = async (values: any) => {
-    console.log(values);
-    const res = await putData('workshops/' + id, getAccessToken(), values);
-    const file = inputImage.current as HTMLInputElement;
-    if (file.files![0] !== undefined) {
-      await postImage('workshops/upload_image', getAccessToken(), file.files![0], res?.data.id);
-    }
-    context.openAlert(AlertType.success, 'Pomyślnie dodano nową pracownię do bazy!');
-    history.push('/admin/workshops');
+  const updateWorkshop = async (values: any) => {
+    await putData('workshops/' + id, getAccessToken(), values)
+      .then(async (res) => {
+        const file = inputImage.current as HTMLInputElement;
+        if (file.files![0] !== undefined) {
+          await postImage('workshops/upload_image', getAccessToken(), file.files![0], res?.data.id);
+        }
+        alertContext.openAlert(AlertType.success, 'Pomyślnie dodano nową pracownię do bazy!');
+        history.push('/admin/workshops');
+      })
+      .catch((err) => alertContext.openAlert(AlertType.warning, 'Coś poszło nie tak.'));
   };
   if (loading)
     return (
@@ -85,15 +86,15 @@ const UpdateWorkshop: React.FC = () => {
             name: currentWorkshop.name,
             english_name: currentWorkshop.english_name,
             room_number: currentWorkshop.room_number,
-            typeId: currentWorkshop.typeId,
-            labId: currentWorkshop.labId,
+            typeId: currentWorkshop.typeId ? currentWorkshop.typeId : 0,
+            labId: currentWorkshop.labId ? currentWorkshop.labId : 0,
             employees: currentWorkshop.Employees.map((emp) => {
               return { employeeId: emp.id };
             })
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
-            putWorkshop(data);
+            updateWorkshop(data);
             setSubmitting(false);
           }}
           validationSchema={WorkshopSchema}
@@ -106,6 +107,7 @@ const UpdateWorkshop: React.FC = () => {
               <FormControl>
                 <InputLabel id='type-select'>Typ Pracowni</InputLabel>
                 <Field id='type-select' name='typeId' type='select' as={NativeSelect}>
+                  <option value={0}>Brak</option>
                   {wTypes !== null &&
                     wTypes.map((type) => (
                       <option value={type.id} key={type.id}>
@@ -117,6 +119,7 @@ const UpdateWorkshop: React.FC = () => {
               <FormControl>
                 <InputLabel id='lab-select'>Laboratorium</InputLabel>
                 <Field id='lab-select' name='labId' type='select' as={NativeSelect}>
+                  <option value={0}>Brak</option>
                   {labs !== null &&
                     labs.map((lab) => (
                       <option value={lab.id} key={lab.id}>

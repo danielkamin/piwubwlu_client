@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAccessToken } from './accessToken';
-import {API_URL} from './constants'
+import {API_URL} from '../constants'
 const customAxios = axios.create({
   baseURL: API_URL,
   headers: { Accept: 'application/json', 'Content-Type': 'application/json' },

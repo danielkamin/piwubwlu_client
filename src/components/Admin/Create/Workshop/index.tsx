@@ -30,7 +30,7 @@ import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 const NewWorkshop: React.FC = () => {
   const history = useHistory();
   const classes = useStyles();
-  const context = useAlertContext();
+  const alertContext = useAlertContext();
   const [labs, setLabs] = useState<ILab[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [wTypes, setWTypes] = useState<IWorkshopType[]>([]);
@@ -58,10 +58,10 @@ const NewWorkshop: React.FC = () => {
         if (file.files![0] !== undefined) {
           await postImage('workshops/upload_image', getAccessToken(), file.files![0], res?.data.id);
         }
-        context.openAlert(AlertType.success, 'Pomyślnie dodano nową pracownię do bazy!');
+        alertContext.openAlert(AlertType.success, 'Pomyślnie dodano nową pracownię do bazy!');
         history.push('/admin/workshops');
       })
-      .catch((err) => context.openAlert(AlertType.warning, 'Coś poszło nie tak.'));
+      .catch((err) => alertContext.openAlert(AlertType.warning, 'Coś poszło nie tak.'));
   };
   const HandleFileUpload = () => {
     setCurrentPhoto(URL.createObjectURL(inputImage.current?.files![0]));
@@ -92,7 +92,7 @@ const NewWorkshop: React.FC = () => {
             labId: '',
             employees: [{ employeeId: employees[0].Employee.id }]
           }}
-          onSubmit={(data, { setSubmitting, setErrors }) => {
+          onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             createWorkshop(data);
             setSubmitting(false);
@@ -135,11 +135,11 @@ const NewWorkshop: React.FC = () => {
                   {(arrayHelpers) => (
                     <div>
                       <Button
-                        onClick={() =>
+                        onClick={() => {
                           arrayHelpers.push({
-                            employeeId: values.employees[0].employeeId
-                          })
-                        }
+                            employeeId: employees[0].Employee.id
+                          });
+                        }}
                         endIcon={<AddIcon />}
                         variant='outlined'
                         color='secondary'

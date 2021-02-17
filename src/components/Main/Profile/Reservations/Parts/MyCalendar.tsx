@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { getAccessToken } from '../../../Helpers/accessToken';
+import { getAccessToken } from '../../../../../utils/api/accessToken';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import FullCalendar, { EventInput, EventClickArg } from '@fullcalendar/react';
 import { Container, CircularProgress } from '@material-ui/core';
-import { getData } from '../../../Api';
-import { Reservation } from '../types';
+import { getData } from '../../../../../api/';
+import { Reservation } from '../../../types';
 interface Props {
   ownedReservations: Reservation[];
   supervisedReservations: Reservation[];

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { setAccessToken, setRoles } from './Helpers/accessToken';
+import { setAccessToken, setRoles } from './utils/api/accessToken';
 import './App.css';
 import Router from './Router/Router';
-import customAxios from './Helpers/customAxios';
-import { API_URL } from './Helpers/constants';
+import customAxios from './utils/api/customAxios';
+import { API_URL } from './utils/constants';
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {

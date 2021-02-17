@@ -22,14 +22,16 @@ const UpdateDepartment: React.FC = () => {
   useEffect(() => {
     getDepartment();
   }, []);
-  const createDepartment = async (values: IDepartment) => {
-    const res = await putData('departments/' + id, getAccessToken(), values);
-    context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano nową katedrę w bazie!');
-    history.push('/admin/departments');
+  const updateDepartment = async (values: IDepartment) => {
+    await putData('departments/' + id, getAccessToken(), values)
+      .then(() => {
+        context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano nową katedrę w bazie!');
+        history.push('/admin/departments');
+      })
+      .catch((err) => context.openAlert(AlertType.warning, err));
   };
   const getDepartment = async () => {
     const data = await getData('departments/' + id, getAccessToken());
-
     setCurrentDepartment(data);
     setLoading(false);
   };
@@ -54,7 +56,7 @@ const UpdateDepartment: React.FC = () => {
           initialValues={{ name: currentDepartment.name, english_name: currentDepartment.english_name, id: currentDepartment.id }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
-            createDepartment(data);
+            updateDepartment(data);
             setSubmitting(false);
           }}
           validationSchema={DepartmentSchema}

@@ -1,20 +1,20 @@
 import React, { ReactText } from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@material-ui/core';
-import { getAccessToken } from '../../../../utils/api/accessToken';
-import { Reservation, ReservationState } from '../../types';
-import useStyles from '../../styles';
-import { postData, deleteData } from '../../../../api/index';
+import { getAccessToken } from '../../../../../utils/api/accessToken';
+import { Reservation, ReservationState } from '../../../types';
+import useStyles from '../../../styles';
+import { postData, deleteData } from '../../../../../api/index';
 import { Link } from 'react-router-dom';
-import RentAction from './Parts/RentAction';
+import RentAction from './RentAction';
 import format from 'date-fns/format';
-import { useAlertContext, AlertType } from '../../../../context/AlertContext';
-import DeleteModal from '../../../Shared/Modal/DeleteModal';
+import { useAlertContext, AlertType } from '../../../../../context/AlertContext';
+import DeleteModal from '../../../../Shared/Modal/DeleteModal';
 interface Props {
   data: Reservation[];
   supervised?: boolean;
   CB: () => Promise<void>;
 }
-const Reservations: React.FC<Props> = ({ data, supervised, CB }) => {
+const ReservationsTable: React.FC<Props> = ({ data, supervised, CB }) => {
   const context = useAlertContext();
   const classes = useStyles();
   const handleReject = async (id: ReactText) => {
@@ -95,4 +95,4 @@ const Reservations: React.FC<Props> = ({ data, supervised, CB }) => {
   );
 };
 
-export default Reservations;
+export default ReservationsTable;

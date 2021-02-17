@@ -18,12 +18,12 @@ const NewDepartment: React.FC = () => {
   const history = useHistory();
   const createDepartment = async (values: IDepartment) => {
     await postData('departments', getAccessToken(), values)
-      .then((res) => {
+      .then(() => {
         context.openAlert(AlertType.success, 'Pomyślnie dodano nową katedrę do bazy!');
         history.push('/admin/departments');
       })
       .catch((err) => {
-        context.openAlert(AlertType.warning, 'Coś poszło nie tak.');
+        context.openAlert(AlertType.warning, err);
       });
   };
   return (

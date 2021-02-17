@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, ButtonGroup } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
 interface ButtonProps {
   onAccepted: () => void;
   onRejected: () => void;

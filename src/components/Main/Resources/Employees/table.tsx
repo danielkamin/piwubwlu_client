@@ -29,7 +29,7 @@ const EmployeeTable: React.FC<Props> = ({ Employees }) => {
               </TableCell>
               <TableCell>{row.firstName}</TableCell>
               <TableCell>{row.lastName}</TableCell>
-              <TableCell>{row.Employee?.Department.name !== null ? row.Employee?.Department.name : ' '}</TableCell>
+              <TableCell>{row.Employee?.Department ? row.Employee?.Department.name : ' '}</TableCell>
             </TableRow>
           ))}
         </TableBody>

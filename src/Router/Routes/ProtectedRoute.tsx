@@ -1,9 +1,9 @@
 import React from 'react';
-import { getAccessToken, getRoles } from '../Helpers/accessToken';
-import { logout } from '../Components/Nav/Logout';
+import { getAccessToken, getRoles } from '../../utils/api/accessToken';
+import { logout } from '../../components/Main/Auth/Logout/logout';
 import { Route, Redirect } from 'react-router-dom';
-import { useUserContext } from '../Components/Context/UserContext';
-import { AlertType, useAlertContext } from '../Components/Context/AlertContext';
+import { useUserContext } from '../../context/UserContext';
+import { AlertType, useAlertContext } from '../../context/AlertContext';
 interface Props {
   component: React.FC;
   path: string;

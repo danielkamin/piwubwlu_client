@@ -34,9 +34,12 @@ const Lab: React.FC = () => {
     setEmployees(data);
   };
   const updateLab = async (values: any) => {
-    const res = await putData('labs/' + id, getAccessToken(), values);
-    context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano laboratorium w bazie!');
-    history.push('/admin/labs');
+    await putData('labs/' + id, getAccessToken(), values)
+      .then(() => {
+        context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano laboratorium w bazie!');
+        history.push('/admin/labs');
+      })
+      .catch((err) => context.openAlert(AlertType.warning, err));
   };
   if (loading)
     return (
@@ -65,7 +68,7 @@ const Lab: React.FC = () => {
           }}
           validationSchema={LabSchema}
         >
-          {({ values, isSubmitting }) => (
+          {({ isSubmitting }) => (
             <Form className='form-grid'>
               <MyTextField name='name' type='input' as={TextField} placeholder='Nazwa' />
               <MyTextField name='english_name' type='input' as={TextField} placeholder='Przetłumaczona nazwa' />

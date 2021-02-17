@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAccessToken } from '../../../../utils/api/accessToken';
 import { getData } from '../../../../api/index';
-import { CircularProgress, Container } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import { ICardInfo } from '../../types';
 import MyCard from './MyCard';
 import PageTitle from '../../../Shared/Display/PageTitle';
@@ -14,7 +14,7 @@ const DisplayLabs: React.FC<Props> = () => {
     getLabs();
   }, []);
   const getLabs = async () => {
-    await getData('labs/list', getAccessToken()).then((res) => {
+    await getData('labs/list?page=1&limit=5', getAccessToken()).then((res) => {
       setLabs(res);
     });
     setLoading(false);

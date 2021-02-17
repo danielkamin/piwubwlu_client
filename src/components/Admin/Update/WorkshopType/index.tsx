@@ -15,7 +15,7 @@ import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
 
 const NewWorkshopType: React.FC = () => {
-  const context = useAlertContext();
+  const alertContext = useAlertContext();
   const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(true);
   const [currentWorkshopType, setCurrentWorkshopType] = useState<IWorkshopType>({ id: 0, name: '', english_name: '', symbol: '' });
@@ -29,10 +29,15 @@ const NewWorkshopType: React.FC = () => {
     setLoading(false);
   };
   const history = useHistory();
-  const newWorkshopType = async (values: IWorkshopType) => {
-    await putData('workshopTypes/' + id, getAccessToken(), values);
-    context.openAlert(AlertType.success, 'Pomyślnie zaktualizowano typ pracowni w bazy!');
-    history.push('/admin/workshop_types');
+  const updateWorkshopType = async (values: IWorkshopType) => {
+    await putData('workshopTypes/' + id, getAccessToken(), values)
+      .then(() => {
+        alertContext.openAlert(AlertType.success, 'Pomyślnie zaktualizowano typ pracowni w bazy!');
+        history.push('/admin/workshop_types');
+      })
+      .catch((err) => {
+        alertContext.openAlert(AlertType.warning, err);
+      });
   };
   if (loading)
     return (
@@ -55,7 +60,7 @@ const NewWorkshopType: React.FC = () => {
           initialValues={{ id: 0, name: currentWorkshopType.name, english_name: currentWorkshopType.english_name, symbol: currentWorkshopType.symbol }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
-            newWorkshopType(data);
+            updateWorkshopType(data);
             setSubmitting(false);
           }}
           validationSchema={WorkshopTypeSchema}

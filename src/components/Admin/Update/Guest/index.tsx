@@ -11,8 +11,10 @@ import { Formik, Form, Field } from 'formik';
 import MyTextField from '../../../Shared/Inputs/MyTextField';
 import useStyles from '../../styles';
 import EditIcon from '@material-ui/icons/Edit';
+import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import { Params } from '../../../../utils/types';
 const UpdateGuest: React.FC = () => {
+  const alertContext = useAlertContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [currentGuest, setCurrentGuest] = useState<IGuest>({ id: 0, firstName: '', lastName: '', email: '', isVerified: false, setEmployee: false });
   const { id } = useParams<Params>();
@@ -22,12 +24,26 @@ const UpdateGuest: React.FC = () => {
   }, []);
   const getGuest = async () => {
     const data = await getData('guests/' + id, getAccessToken());
-    setCurrentGuest(data);
+    setCurrentGuest({
+      id: +id,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: '',
+      repeatPassword: '',
+      setEmployee: false,
+      isVerified: data.Guest.isVerified
+    });
     setLoading(false);
   };
   const history = useHistory();
   const updateGuest = async (values: any) => {
-    const res = await putData('guests/' + id, getAccessToken(), values);
+    await putData('guests/' + id, getAccessToken(), values)
+      .then(() => {
+        alertContext.openAlert(AlertType.success, 'Pomyślnie zaktualizowano gościa');
+        history.push('/admin/employees');
+      })
+      .catch((err) => alertContext.openAlert(AlertType.warning, err));
     history.push('/admin/guests');
   };
   if (loading)

@@ -13,12 +13,17 @@ import AddIcon from '@material-ui/icons/Add';
 
 const NewWorkshopType: React.FC = () => {
   const classes = useStyles();
-  const context = useAlertContext();
+  const alertContext = useAlertContext();
   const history = useHistory();
   const newWorkshopType = async (values: IWorkshopType) => {
-    const res = await postData('workshopTypes/', getAccessToken(), values);
-    context.openAlert(AlertType.success, 'Pomyślnie dodano nowy typ pracowni do bazy!');
-    history.push('/admin/workshop_types');
+    await postData('workshopTypes/', getAccessToken(), values)
+      .then(() => {
+        alertContext.openAlert(AlertType.success, 'Pomyślnie dodano nowy typ pracowni do bazy!');
+        history.push('/admin/workshop_types');
+      })
+      .catch((err) => {
+        alertContext.openAlert(AlertType.warning, err);
+      });
   };
   return (
     <Container maxWidth='sm' component='main'>

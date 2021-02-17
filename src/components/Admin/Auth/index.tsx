@@ -45,7 +45,7 @@ const AdminLogin: React.FC = () => {
         </Typography>
         <Formik
           validateOnChange={true}
-          initialValues={{ name: '', password: '' }}
+          initialValues={{ email: '', password: '' }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
             login(data);
@@ -55,7 +55,7 @@ const AdminLogin: React.FC = () => {
         >
           {({ values, isSubmitting }) => (
             <Form autoComplete='on' className={classes.form}>
-              <MyTextField name='name' type='input' as={TextField} placeholder='Nazwa Użytkownika' />
+              <MyTextField name='email' type='input' as={TextField} placeholder='Nazwa Użytkownika' />
               <MyTextField name='password' type='password' as={TextField} placeholder='Hasło' />
               <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Zapamiętaj mnie' />
               <Button type='submit' variant='contained' color='primary' disabled={isSubmitting} fullWidth className={classes.submit}>

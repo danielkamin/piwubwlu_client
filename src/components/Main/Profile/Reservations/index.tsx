@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { CircularProgress, Container, Typography } from '@material-ui/core';
-import { Roles } from '../../../Helpers/types';
-import { getAccessToken } from '../../../Helpers/accessToken';
-import { getData } from '../../../Api/index';
-import Reservations from './Reservations';
-import { Reservation } from '../types';
-import FullCalendar, { EventInput, EventClickArg } from '@fullcalendar/react';
-import { useUserContext } from '../../Context/UserContext';
-import MyCalendar from './MyCalendar';
-const MyReservation: React.FC = () => {
+import { Roles } from '../../../../utils/constants';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import { getData } from '../../../../api';
+import ReservationsTable from './Parts/ReservationsTable';
+import { Reservation } from '../../types';
+import { useUserContext } from '../../../../context/UserContext';
+import MyCalendar from './Parts/MyCalendar';
+const MyReservations: React.FC = () => {
   const context = useUserContext();
   const [loading, setLoading] = useState<boolean>(true);
   const [owned, setOwned] = useState<Reservation[]>(() => {
@@ -43,14 +42,14 @@ const MyReservation: React.FC = () => {
         <Typography variant='h5' style={{ color: 'purple' }}>
           Moje wypożyczenia
         </Typography>
-        <Reservations data={owned} CB={getReservations} />
+        <ReservationsTable data={owned} CB={getReservations} />
         {supervised != null && (
           <div>
             {' '}
             <Typography variant='h5' style={{ color: 'red' }}>
               Nadzorowane
             </Typography>
-            <Reservations data={supervised} supervised CB={getReservations} />
+            <ReservationsTable data={supervised} supervised CB={getReservations} />
           </div>
         )}
       </div>
@@ -59,4 +58,4 @@ const MyReservation: React.FC = () => {
   );
 };
 
-export default MyReservation;
+export default MyReservations;

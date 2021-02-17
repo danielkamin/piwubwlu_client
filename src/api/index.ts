@@ -1,5 +1,5 @@
-import { API_URL } from '../Helpers/constants';
-import customAxios from '../Helpers/customAxios';
+import { API_URL } from '../utils/constants';
+import customAxios from '../utils/api/customAxios';
 const URL = API_URL+'/api';
 export const getData = async (model:string,token:string)=>{
     let newUrl = URL+'/'+model;
@@ -9,6 +9,7 @@ export const getData = async (model:string,token:string)=>{
             headers: { Authorization: 'Bearer ' + token }
           });
         let values = Object.keys(data).length === 0 && data.constructor === Object ? [] : data;
+        console.log("OUTPUT ~ file: index.ts ~ line 12 ~ getData ~ values", values)
         return values;
     }catch(error){
         console.log(error)
@@ -29,7 +30,7 @@ export const deleteData = async(model:string,token:string)=>{
 }
 export const putData = async(model:string,token:string,putData:{})=>{
     let newUrl = URL+'/'+model;
-    
+    console.log("OUTPUT ~ file: index.ts ~ putData ~ putData", putData)
     try{
         const res = await customAxios(newUrl, {
             method: 'PUT',
@@ -42,6 +43,7 @@ export const putData = async(model:string,token:string,putData:{})=>{
         return Promise.reject(error.data);
     }
 }
+
 export const postData = async(model:string,token:string,postData:{})=>{
     let newUrl = URL+'/'+model;
     try{

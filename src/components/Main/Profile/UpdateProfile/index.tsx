@@ -18,7 +18,7 @@ const MyProfile: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const inputImage = useRef<HTMLInputElement>(null);
   const [profileData, setProfileData] = useState<IProfile>(() => {
-    return { firstName: '', lastName: '', email: '', name: '', Employee: null };
+    return { firstName: '', lastName: '', email: '', name: '' };
   });
   const [currentPhoto, setCurrentPhoto] = useState<string>('');
   useEffect(() => {

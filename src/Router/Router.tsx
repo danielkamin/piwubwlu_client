@@ -41,7 +41,8 @@ import {
   MachineDetails,
   WorkshopDetails,
   ReservationDetails,
-  ReservationSurvey
+  ReservationSurvey,
+  ResourceSearch
 } from '../components/index';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { getAccessToken, getRoles } from '../utils/api/accessToken';
@@ -130,7 +131,7 @@ const Routes: React.FC = () => {
                     <Route path='/pracownie/:id' component={WorkshopDetails} />
                     <Route path='/kadra' exact component={Employees} />
                     <Route path='/kadra/:id' component={EmployeeDetails} />
-
+                    <Route path='/szukaj' component={ResourceSearch} />
                     <ProtectedRoute path='/rezerwacje/:id' exact component={ReservationDetails} />
                     <ProtectedRoute path='/rezerwacje/:id/ankieta' component={ReservationSurvey} />
                     <Route component={NotFound} />

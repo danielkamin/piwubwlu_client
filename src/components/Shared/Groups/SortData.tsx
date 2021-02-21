@@ -4,21 +4,28 @@ import { MenuItem, Select } from '@material-ui/core';
 import { ICardInfo } from '../types';
 import { API_URL } from '../../../utils/constants';
 import MyCard from '../Display/MyCard';
+import CircularProgress from '@material-ui/core/CircularProgress';
 interface Props {
   sortQuery: string | string[] | null;
   data: ICardInfo[];
   qQuery: string | string[] | null;
   linkString: string;
+  loading: boolean;
 }
 
-const SortData: React.FC<Props> = ({ sortQuery, data, qQuery, linkString }) => {
+const SortData: React.FC<Props> = ({ sortQuery, data, qQuery, linkString, loading }) => {
   const history = useHistory();
   const sortWorkshops = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
     if (value !== '') history.push(`${linkString}?q=${qQuery}&sort=${value}`);
     else history.push(`${linkString}?q=${qQuery}`);
   };
-
+  if (loading)
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
   return (
     <div>
       <div className='sort-form'>

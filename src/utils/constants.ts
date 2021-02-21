@@ -14,3 +14,6 @@ export const ROLES = [
   export const TimeUnit = {
     15:'15',30:'30',45:'45',60:'60'
   }
+  export const EmployeeTitles = {
+    ENGINEER:'inż.',MASTER:'mgr',DOCTOR:'dr',PROFESSOR:'prof.',HABILITATOR:'hab.'
+  }

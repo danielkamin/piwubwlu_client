@@ -22,7 +22,7 @@ const DisplayWorkshops: React.FC = () => {
   }, [search]);
 
   const getWorkshops = async () => {
-    await getData(`workshops/list${search}`, getAccessToken()).then((res) => {
+    await getData(`workshops/list?page=1&limit=5`, getAccessToken()).then((res) => {
       setWorkshops(res);
     });
     setLoading(false);
@@ -36,12 +36,6 @@ const DisplayWorkshops: React.FC = () => {
     if (nameSearch !== '') history.push(`/pracownie?q=${nameSearch}`);
     else history.push('/pracownie');
   };
-  if (loading)
-    return (
-      <div>
-        <CircularProgress />
-      </div>
-    );
 
   return (
     <Container maxWidth='xl' className='container-spacing'>
@@ -50,7 +44,7 @@ const DisplayWorkshops: React.FC = () => {
         <TextField value={nameSearch} onChange={handleNameSearchChange} />
         <Button type='submit'>Szukaj</Button>
       </form>
-      <SortData data={workshops} sortQuery={query.sort} qQuery={nameSearch} linkString='/pracownie' />
+      <SortData data={workshops} sortQuery={query.sort} qQuery={nameSearch} loading={loading} linkString='/pracownie' />
     </Container>
   );
 };

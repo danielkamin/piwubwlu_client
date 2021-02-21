@@ -14,7 +14,7 @@ const DisplayLabs: React.FC<Props> = () => {
     getLabs();
   }, []);
   const getLabs = async () => {
-    await getData('labs/list?page=1&limit=5', getAccessToken()).then((res) => {
+    await getData('labs/list', getAccessToken()).then((res) => {
       setLabs(res);
     });
     setLoading(false);

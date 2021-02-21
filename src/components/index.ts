@@ -40,7 +40,7 @@ export {default as ChangePassword} from '../components/Main/Profile/ChangePasswo
 export {default as DeleteAccount} from '../components/Main/Profile/DeleteAccount'
 export {default as MyReservations} from './Main/Profile/Reservations/'
 export {default as UpdateProfile} from '../components/Main/Profile/UpdateProfile'
-export {default as ResourceSearch} from '../components/Main/ReasourceSearch'
+export {default as ResourceSearch} from '../components/Main/Resources/Search'
 export {default as Employees} from '../components/Main/Resources/Employees'
 export {default as Labs} from '../components/Main/Resources/Labs'
 export {default as Machines} from '../components/Main/Resources/Machines'

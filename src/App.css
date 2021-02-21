@@ -296,3 +296,10 @@
   text-align: center;
   flex-direction: column;
 }
+.pagination {
+  display: flex;
+  list-style: none;
+  justify-content: center;
+}
+.page-item {
+}

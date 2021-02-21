@@ -24,7 +24,7 @@ const NewMachine: React.FC = () => {
     getWorkshopList();
   }, []);
   const getWorkshopList = async () => {
-    await getData('workshops/list', getAccessToken()).then((res) => setWorkshops(res));
+    await getData('workshops/names', getAccessToken()).then((res) => setWorkshops(res));
   };
   const HandleFileUpload = () => {
     setCurrentPhoto(URL.createObjectURL(inputImage.current?.files![0]));

@@ -7,6 +7,7 @@ import useStyles from '../../../styles';
 import { useUserContext } from '../../../../context/UserContext';
 import { Link } from 'react-router-dom';
 import { AccountCircleOutlined } from '@material-ui/icons';
+import SearchBar from '../../../../components/Main/Resources/Search/SearchBar';
 const Links: React.FC = () => {
   const classes = useStyles();
   const context = useUserContext();
@@ -22,6 +23,7 @@ const Links: React.FC = () => {
         <HomeOutlinedIcon />
       </IconButton>
       <div className={classes.grow} />
+      <SearchBar />
       {context?.loggedIn ? (
         <div>
           <IconButton color='inherit' component={Link} to='/moje_konto'>

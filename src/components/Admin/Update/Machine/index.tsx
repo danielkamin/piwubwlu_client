@@ -29,7 +29,7 @@ const UpdateMachine: React.FC = () => {
     getFormData();
   }, []);
   const getFormData = async () => {
-    const [tempWorkshops, tempMachine] = await Promise.all([getData('workshops/list', getAccessToken()), getData('machines/' + id, getAccessToken())]);
+    const [tempWorkshops, tempMachine] = await Promise.all([getData('workshops/names', getAccessToken()), getData('machines/' + id, getAccessToken())]);
     setCurrentMachine(tempMachine);
     setWorkshopList(tempWorkshops);
     setCurrentPhoto(API_URL + '/' + tempMachine.imagePath);

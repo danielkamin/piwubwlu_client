@@ -16,6 +16,7 @@ const EmployeeTable: React.FC<Props> = ({ Employees }) => {
         <TableHead>
           <TableRow>
             <TableCell></TableCell>
+            <TableCell>Tytuł</TableCell>
             <TableCell>Imię</TableCell>
             <TableCell>Nazwisko</TableCell>
             <TableCell>Katedra</TableCell>

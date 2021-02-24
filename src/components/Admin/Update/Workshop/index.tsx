@@ -13,6 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { API_URL } from '../../../../utils/constants';
 import ClearIcon from '@material-ui/icons/Clear';
 import EditIcon from '@material-ui/icons/Edit';
+import MyTextArea from '../../../Shared/Inputs/MyTextArea';
 import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import useStyles from '../../styles';
 interface Workshop extends IWorkshop {
@@ -90,7 +91,8 @@ const UpdateWorkshop: React.FC = () => {
             labId: currentWorkshop.labId ? currentWorkshop.labId : 0,
             employees: currentWorkshop.Employees.map((emp) => {
               return { employeeId: emp.id };
-            })
+            }),
+            additionalInfo: currentWorkshop.additionalInfo
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -163,6 +165,7 @@ const UpdateWorkshop: React.FC = () => {
                   )}
                 </FieldArray>
               </FormGroup>
+              <MyTextArea name='additionalInfo' as={TextField} placeholder='Dodatkowe informacje' />
               <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' disabled={isSubmitting} color='primary'>
                 Aktualizuj Pracownię

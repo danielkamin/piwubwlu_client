@@ -1,7 +1,10 @@
 import {ReservationState} from '../Shared/types'
 type Employee = {
     id?:number,
-    departmentId?:number
+    departmentId?:number,
+    degreeId?:number,
+    telephone?:string,
+    room?:string
 }
 
 export interface IUser {
@@ -19,7 +22,7 @@ export interface IGuest extends IUser{
 }
 
 export interface IEmployee extends IUser {
-    Employee:Employee
+    Employee:Employee;
 }
 
 export interface IWorkshop {
@@ -30,6 +33,7 @@ export interface IWorkshop {
     labId: number;
     typeId: number;
     imagePath?:string;
+    additionalInfo?:string;
 }
 
 export interface IWorkshopType {
@@ -47,6 +51,7 @@ export interface IMachine {
     maxUnit:number;
     workshopId: number;
     machineState:boolean;
+    additionalInfo?:string;
 }
 
 export interface ILab {
@@ -69,7 +74,10 @@ export interface IDepartment {
     name: string;
     english_name: string;
 }
-
+export interface IDegree{
+    id:number;
+    name:string;
+}
 export const TimeUnit = {
     15:'15',30:'30',45:'45',60:'60'
   }

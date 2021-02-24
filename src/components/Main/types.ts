@@ -25,6 +25,13 @@ type Employee = {
     information:string;
     title:string;
     Department:Department;
+    Degree:Degree;
+    telephone:string;
+    room:string;
+}
+export type Degree = {
+    id:number;
+    name:string;
 }
 export type Department = {
     id:number;
@@ -36,7 +43,6 @@ export interface NewPasswordForm {
     repeatPassword:string;
 }
 export  interface RegisterValues {
-      name: string;
       firstName:string;
       lastName:string;
       email: string;
@@ -52,7 +58,6 @@ export interface IProfile {
     firstName:string;
     lastName:string;
     email?:string;
-    name?:string;
     Employee?:Employee;
 }
 export interface Reservation {

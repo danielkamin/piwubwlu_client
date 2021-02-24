@@ -40,7 +40,6 @@ const Register: React.FC = () => {
             validateOnChange={true}
             initialValues={{
               email: '',
-              name: '',
               password: '',
               repeatPassword: '',
               firstName: '',
@@ -59,7 +58,6 @@ const Register: React.FC = () => {
                 <MyTextField placeholder='E-mail' type='input' as={TextField} name='email' />
                 <MyTextField placeholder='Imię' type='input' as={TextField} name='firstName' />
                 <MyTextField placeholder='Nazwisko' type='input' as={TextField} name='lastName' />
-                <MyTextField placeholder='Nazwa użytkownika' type='input' as={TextField} name='name' />
                 <MyTextField placeholder='Hasło' type='password' as={TextField} name='password' />
                 <MyTextField placeholder='Powtórz Hasło' type='password' as={TextField} name='repeatPassword' />
                 <Typography variant='subtitle2'>

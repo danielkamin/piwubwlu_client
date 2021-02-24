@@ -10,6 +10,7 @@ import { Formik, Form, Field } from 'formik';
 import ImageUploadButton from '../../../Shared/Buttons/ImageUploadButton';
 import MyTextField from '../../../Shared/Inputs/MyTextField';
 import { Params } from '../../../../utils/types';
+import MyTextArea from '../../../Shared/Inputs/MyTextArea';
 import { API_URL, TimeUnit } from '../../../../utils/constants';
 import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import useStyles from '../../styles';
@@ -71,7 +72,8 @@ const UpdateMachine: React.FC = () => {
             timeUnit: currentMachine.timeUnit,
             maxUnit: currentMachine.maxUnit,
             machineState: currentMachine.machineState,
-            workshopId: currentMachine.workshopId
+            workshopId: currentMachine.workshopId,
+            additionalInfo: currentMachine.additionalInfo
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -115,6 +117,7 @@ const UpdateMachine: React.FC = () => {
                   ))}
                 </Field>
               </FormControl>
+              <MyTextArea name='additionalInfo' as={TextField} placeholder='Dodatkowe informacje' />
               <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' disabled={isSubmitting} color='primary'>
                 Aktualizuj

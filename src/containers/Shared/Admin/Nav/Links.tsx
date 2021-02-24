@@ -59,6 +59,14 @@ const Links: React.FC = () => {
           <ListItemText primary='Typy Pracowni' />
         </ListItem>
       </Link>
+      <Link to='/admin/degrees' className={classes.links}>
+        <ListItem button key={2}>
+          <ListItemIcon>
+            <AssignmentIcon />
+          </ListItemIcon>
+          <ListItemText primary='Tytuły Naukowe' />
+        </ListItem>
+      </Link>
       <Link to='/admin/guests' className={classes.links}>
         <ListItem button key={2}>
           <ListItemIcon>

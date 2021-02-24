@@ -23,6 +23,7 @@ import {
 } from '@material-ui/core';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import MyTextField from '../../../Shared/Inputs/MyTextField';
+import MyTextArea from '../../../Shared/Inputs/MyTextArea';
 import useStyles from '../../styles';
 import AddIcon from '@material-ui/icons/Add';
 import ImageUploadButton from '../../../Shared/Buttons/ImageUploadButton';
@@ -90,7 +91,8 @@ const NewWorkshop: React.FC = () => {
             room_number: '',
             typeId: '',
             labId: '',
-            employees: [{ employeeId: employees[0].Employee.id }]
+            employees: [{ employeeId: employees[0].Employee.id }],
+            additionalInfo: ''
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -167,6 +169,7 @@ const NewWorkshop: React.FC = () => {
                   )}
                 </FieldArray>
               </FormGroup>
+              <MyTextArea name='additionalInfo' as={TextField} placeholder='Dodatkowe informacje' />
               <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' color='primary' disabled={isSubmitting}>
                 Stwórz Pracownię

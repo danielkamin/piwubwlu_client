@@ -8,7 +8,6 @@ export const LoginSchema = yup.object({
     password: yup.string().required('Hasło jest wymagane')
 });
 export const RegisterSchema = yup.object({
-    name: yup.string().required('Nazwa uzytkownika jest wymagana'),
     firstName: yup.string().required('Imię jest wymagane'),
     lastName: yup.string().required('Nazwisko jest wymagane'),
     email: yup.string().email('Wprowadź swój adres e-mail zgodnie z formatem: yourname@example.com').required('E-Mail jest wymagany'),

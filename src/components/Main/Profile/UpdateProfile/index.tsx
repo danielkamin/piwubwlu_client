@@ -18,7 +18,7 @@ const MyProfile: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const inputImage = useRef<HTMLInputElement>(null);
   const [profileData, setProfileData] = useState<IProfile>(() => {
-    return { firstName: '', lastName: '', email: '', name: '' };
+    return { firstName: '', lastName: '', email: '' };
   });
   const [currentPhoto, setCurrentPhoto] = useState<string>('');
   useEffect(() => {
@@ -66,9 +66,10 @@ const MyProfile: React.FC = () => {
           initialValues={{
             firstName: profileData?.firstName,
             lastName: profileData?.lastName,
-            name: profileData?.name,
             email: profileData?.email,
-            information: profileData.Employee !== null ? profileData.Employee?.information : null
+            information: profileData.Employee ? profileData.Employee?.information : null,
+            telephone: profileData.Employee ? profileData.Employee?.telephone : null,
+            room: profileData.Employee ? profileData.Employee?.room : null
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -79,11 +80,16 @@ const MyProfile: React.FC = () => {
         >
           {({ isSubmitting }) => (
             <Form className='form-grid'>
-              <MyTextField name='name' type='input' as={TextField} placeholder='Nazwa' />
               <MyTextField name='firstName' type='input' as={TextField} placeholder='Imię' />
               <MyTextField name='lastName' type='input' as={TextField} placeholder='Nazwisko' />
               <MyTextField name='email' type='input' as={TextField} placeholder='E-mail' />
-              {profileData.Employee && <MyTextArea name='information' as={TextField} placeholder='Dodatkowe informacje' />}
+              {profileData.Employee && (
+                <div>
+                  <MyTextArea name='information' as={TextField} placeholder='Dodatkowe informacje' />
+                  <MyTextField name='telephone' type='input' as={TextField} placeholder='Numer telefonu' />
+                  <MyTextField name='room' type='input' as={TextField} placeholder='Numer pokoju' />
+                </div>
+              )}
               <Button variant='contained' color='primary' type='submit' disabled={isSubmitting}>
                 Edytuj Profil
               </Button>

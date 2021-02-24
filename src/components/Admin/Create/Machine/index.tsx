@@ -7,6 +7,7 @@ import { MachineSchema } from '../../schemas';
 import { Button, TextField, Container, InputLabel, FormControlLabel, FormHelperText, Avatar, CssBaseline, NativeSelect, FormControl, Checkbox, Paper, Typography } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
 import MyTextField from '../../../Shared/Inputs/MyTextField';
+import MyTextArea from '../../../Shared/Inputs/MyTextArea';
 import ImageUploadButton from '../../../Shared/Buttons/ImageUploadButton';
 import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import { TimeUnit } from '../../../../utils/constants';
@@ -49,7 +50,7 @@ const NewMachine: React.FC = () => {
           <AddIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          Dodaj Maszyne
+          Nowa Maszyna
         </Typography>
         <Formik
           validateOnChange={true}
@@ -60,7 +61,8 @@ const NewMachine: React.FC = () => {
             timeUnit: '',
             maxUnit: 0,
             machineState: false,
-            workshopId: 0
+            workshopId: 0,
+            additionalInfo: ''
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -98,7 +100,7 @@ const NewMachine: React.FC = () => {
               <FormControl error={!!errors.workshopId}>
                 <InputLabel htmlFor='workshopId'>Pracownia</InputLabel>
                 <Field name='workshopId' type='select' as={NativeSelect}>
-                  <option value=''></option>
+                  <option value=''>Wyberz maszynę</option>
                   {workshops.map((workshop) => (
                     <option value={workshop.id} key={workshop.id}>
                       {workshop.name}
@@ -107,6 +109,7 @@ const NewMachine: React.FC = () => {
                 </Field>
                 <FormHelperText>{errors.workshopId}</FormHelperText>
               </FormControl>
+              <MyTextArea name='additionalInfo' as={TextField} placeholder='Dodatkowe informacje' />
               <ImageUploadButton currentPhoto={currentPhoto} handleChange={HandleFileUpload} inputImage={inputImage} />
               <Button type='submit' variant='contained' disabled={isSubmitting} color='primary'>
                 Dodaj Maszynę

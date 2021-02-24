@@ -60,7 +60,7 @@ const NewLab: React.FC = () => {
                   Pracownik{' '}
                 </InputLabel>
                 <Field name='employeeId' type='select' as={NativeSelect}>
-                  <option value=''></option>
+                  <option value=''>wybierz pracownika</option>
                   {employees.map((emp) => (
                     <option value={emp.Employee.id} key={emp.Employee.id}>
                       {emp.firstName} {emp.lastName}

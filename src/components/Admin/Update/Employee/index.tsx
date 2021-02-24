@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { IEmployee, IDepartment } from '../../types';
+import { IEmployee, IDepartment, IDegree } from '../../types';
 import { UserSchema } from '../../schemas';
 import { Button, TextField, Paper, Container, Checkbox, FormControlLabel, Typography, FormControl, InputLabel, NativeSelect, CssBaseline, Avatar } from '@material-ui/core';
 import { Formik, Form, Field } from 'formik';
@@ -18,7 +18,12 @@ const UpdateEmployee: React.FC = () => {
   const classes = useStyles();
   const alertContext = useAlertContext();
   const [loading, setLoading] = useState<boolean>(true);
-  const [departmentList, setDepartmentList] = useState<IDepartment[]>([]);
+  const [departmentList, setDepartmentList] = useState<IDepartment[]>(() => {
+    return [];
+  });
+  const [degreesList, setDegreesList] = useState<IDegree[]>(() => {
+    return [];
+  });
   const [currentEmp, setCurrentEmp] = useState<IEmployee>({
     id: 0,
     firstName: '',
@@ -28,7 +33,8 @@ const UpdateEmployee: React.FC = () => {
     email: '',
     setEmployee: true,
     Employee: {
-      departmentId: 0
+      departmentId: 0,
+      degreeId: 0
     }
   });
   const history = useHistory();
@@ -37,8 +43,13 @@ const UpdateEmployee: React.FC = () => {
     getEmp();
   }, []);
   const getEmp = async () => {
-    const [emp, depList] = await Promise.all([getData('employees/' + id, getAccessToken()), getData('departments/list', getAccessToken())]);
-    setDepartmentList(depList);
+    const [emp, depList, degList] = await Promise.all([getData('employees/' + id, getAccessToken()), getData('departments/list', getAccessToken()), getData('degrees/list', getAccessToken())]);
+    setDepartmentList(() => {
+      return depList;
+    });
+    setDegreesList(() => {
+      return degList;
+    });
     setCurrentEmp({
       id: +id,
       firstName: emp.firstName,
@@ -48,7 +59,10 @@ const UpdateEmployee: React.FC = () => {
       repeatPassword: '',
       setEmployee: true,
       Employee: {
-        departmentId: emp.Employee.Department ? emp.Employee.Department.id : 0
+        departmentId: emp.Employee.Department ? emp.Employee.Department.id : 0,
+        degreeId: emp.Employee.Degree ? emp.Employee.Degree.id : 0,
+        room: emp.Employee.room,
+        telephone: emp.Employee.telephone
       }
     });
     setLoading(false);
@@ -87,7 +101,10 @@ const UpdateEmployee: React.FC = () => {
             password: currentEmp.password,
             repeatPassword: currentEmp.repeatPassword,
             setEmployee: currentEmp.setEmployee,
-            departmentId: currentEmp.Employee.departmentId
+            departmentId: currentEmp.Employee.departmentId,
+            degreeId: currentEmp.Employee.degreeId,
+            telephone: currentEmp.Employee.telephone,
+            room: currentEmp.Employee.room
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -101,6 +118,8 @@ const UpdateEmployee: React.FC = () => {
               <MyTextField name='firstName' type='input' as={TextField} placeholder='Imię' />
               <MyTextField name='lastName' type='input' as={TextField} placeholder='Nazwisko' />
               <MyTextField name='email' type='input' as={TextField} placeholder='Email' />
+              <MyTextField name='telephone' type='input' as={TextField} placeholder='Telefon kontaktowy' />
+              <MyTextField name='room' type='input' as={TextField} placeholder='Numer pokoju' />
               <MyTextField name='password' type='input' as={TextField} placeholder='Nowe Hasło' />
               <MyTextField name='repeatPassword' type='input' as={TextField} placeholder='Powtórz Hasło' />
               <FormControlLabel label='Pracownik?' control={<Field name='setEmployee' as={Checkbox} type='checkbox' />} />
@@ -111,6 +130,17 @@ const UpdateEmployee: React.FC = () => {
                   {departmentList?.map((department) => (
                     <option value={department.id} key={department.id}>
                       {department.name}
+                    </option>
+                  ))}
+                </Field>
+              </FormControl>
+              <FormControl>
+                <InputLabel htmlFor='degreeId'>Tytuł Naukowy</InputLabel>
+                <Field name='degreeId' type='select' as={NativeSelect}>
+                  <option value=''></option>
+                  {degreesList?.map((degree) => (
+                    <option value={degree.id} key={degree.id}>
+                      {degree.name}
                     </option>
                   ))}
                 </Field>

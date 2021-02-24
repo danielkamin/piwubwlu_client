@@ -42,7 +42,10 @@ import {
   WorkshopDetails,
   ReservationDetails,
   ReservationSurvey,
-  ResourceSearch
+  ResourceSearch,
+  NewDegree,
+  ReadDegrees,
+  UpdateDegree
 } from '../components/index';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { getAccessToken, getRoles } from '../utils/api/accessToken';
@@ -88,6 +91,9 @@ const Routes: React.FC = () => {
                     <AdminRoute path='/admin/departments' exact component={ReadDepartments} />
                     <AdminRoute path='/admin/update_department/:id' exact component={UpdateDepartment} />
                     <AdminRoute path='/admin/new_department' exact component={NewDepartment} />
+                    <AdminRoute path='/admin/new_degree' exact component={NewDegree} />
+                    <AdminRoute path='/admin/degrees' exact component={ReadDegrees} />
+                    <AdminRoute path='/admin/update_degree/:id' exact component={UpdateDegree} />
                     <AdminRoute path='/admin/guests' exact component={ReadGuests} />
                     <AdminRoute path='/admin/update_guest/:id' component={UpdateGuest} />
                     <AdminRoute path='/admin/update_employee/:id' component={UpdateEmployee} />

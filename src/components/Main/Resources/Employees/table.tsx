@@ -28,6 +28,7 @@ const EmployeeTable: React.FC<Props> = ({ Employees }) => {
               <TableCell>
                 <Link to={'/kadra/' + row.id}>{row.picturePath !== null ? <Avatar src={API_URL + '/' + row.picturePath} /> : <Avatar />}</Link>
               </TableCell>
+              <TableCell>{row.Employee?.Degree ? row.Employee?.Degree.name : ' '}</TableCell>
               <TableCell>{row.firstName}</TableCell>
               <TableCell>{row.lastName}</TableCell>
               <TableCell>{row.Employee?.Department ? row.Employee?.Department.name : ' '}</TableCell>

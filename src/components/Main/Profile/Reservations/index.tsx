@@ -7,6 +7,7 @@ import ReservationsTable from './Parts/ReservationsTable';
 import { Reservation } from '../../types';
 import { useUserContext } from '../../../../context/UserContext';
 import MyCalendar from './Parts/MyCalendar';
+import ProfileCalendar from '../../../Shared/Calendar/ProfileCalendar';
 const MyReservations: React.FC = () => {
   const context = useUserContext();
   const [loading, setLoading] = useState<boolean>(true);
@@ -53,7 +54,8 @@ const MyReservations: React.FC = () => {
           </div>
         )}
       </div>
-      <MyCalendar ownedReservations={owned} supervisedReservations={supervised ? supervised : []} />
+      {/* <MyCalendar ownedReservations={owned} supervisedReservations={supervised ? supervised : []} /> */}
+      <ProfileCalendar ownedReservations={owned} supervisedReservations={supervised ? supervised : []} />
     </Container>
   );
 };

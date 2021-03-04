@@ -1,21 +1,18 @@
-$white: #fff;
-a:focus {
-  outline-style: dotted;
-  outline-width: 3px;
-}
 .search-form {
   position: relative;
   margin-top: 1px;
   padding: 10px;
 }
+
 .search-input {
-  color: $white;
+  color: #fff;
   border: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.6);
   background-color: transparent;
   width: 100%;
   padding: 5px 10px;
 }
+
 .search-button {
   position: absolute;
   right: 10px;
@@ -25,6 +22,8 @@ a:focus {
   border: 0;
   cursor: pointer;
 }
+
 .test-class {
-  color: $white;
+  color: #fff;
 }
+/*# sourceMappingURL=app.css.map */

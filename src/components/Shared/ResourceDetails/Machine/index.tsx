@@ -3,12 +3,12 @@ import { useParams } from 'react-router-dom';
 import { getData } from '../../../../api/index';
 import { getAccessToken } from '../../../../utils/api/accessToken';
 import { CircularProgress, Container, Typography, Avatar } from '@material-ui/core';
-import MachineCalendar from './Calendar';
 import { IMachineDetails } from '../../types';
 import useStyles from '../../styles';
 import { useUserContext } from '../../../../context/UserContext';
 import { API_URL } from '../../../../utils/constants';
 import BrokenImageIcon from '@material-ui/icons/BrokenImage';
+import MachineCalendar from '../../Calendar/MachineCalendar';
 interface Params {
   id: string;
 }
@@ -63,8 +63,7 @@ const MachineDetails: React.FC = () => {
           </div>
         </Container>
       </div>
-
-      {context?.loggedIn && <MachineCalendar id={id} isMachineActive={machineDetails?.machineState} timeUnit={machineDetails!.timeUnit} maxUnit={machineDetails?.maxUnit} />}
+      {context?.loggedIn && <MachineCalendar id={id} isMachineActive={machineDetails?.machineState} timeUnit={machineDetails!.timeUnit} maxUnit={machineDetails?.maxUnit} roles={context.roles} />}
     </Container>
   );
 };

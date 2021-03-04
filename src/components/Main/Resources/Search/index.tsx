@@ -31,7 +31,9 @@ const SearchResources: React.FC = () => {
     setLoading(false);
   };
   const paginate = (page: number) => setCurrentPage(page);
-
+  const indexOfLastPost = currentPage * elementsPerPage;
+  const indexOfFirstPost = indexOfLastPost - elementsPerPage;
+  const currentElements = resources.slice(indexOfFirstPost, indexOfLastPost);
   if (loading)
     return (
       <div>
@@ -41,8 +43,9 @@ const SearchResources: React.FC = () => {
   return (
     <Container maxWidth='xl'>
       <Container maxWidth='md'>
-        {console.log('resources: ', resources)}
-        {resources.map((res: []) => res.map((elem: CardProps) => <SearchCard id={elem.id} name={elem.name} secondName={elem.secondName} type='wk' />))}
+        {currentElements.map((res: CardProps) => (
+          <SearchCard key={Math.random()} id={res.id} name={res.name} secondName={res.secondName} type='wk' />
+        ))}
       </Container>
       <Pagination paginate={paginate} totalElements={resources.length} elementsPerPage={elementsPerPage} currentPage={currentPage} />
     </Container>

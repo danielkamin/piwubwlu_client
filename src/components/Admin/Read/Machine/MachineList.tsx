@@ -17,6 +17,7 @@ const MachineList: React.FC = () => {
   const getMachines = async () => {
     const response = await getData('machines', getAccessToken())
       .then((res) => {
+        console.log(res);
         setMachines(res);
         setLoading(false);
       })
@@ -41,7 +42,6 @@ const MachineList: React.FC = () => {
     { field: 'name', headerName: 'Nazwa', width: 130 },
     { field: 'english_name', headerName: 'Name', width: 130 },
     { field: 'workshopId', headerName: 'Id Pracowni', width: 130 },
-    { field: 'machineState', headerName: 'Stan', width: 130 },
     { field: 'timeUnit', headerName: 'Jednostka czasu', width: 130 },
     { field: 'maxUnit', headerName: 'Max jednostek czasu', width: 130 },
     {
@@ -71,7 +71,8 @@ const MachineList: React.FC = () => {
     );
 
   return (
-    <div className='resource-table'>
+    <div style={{ height: 700 }}>
+      {console.log(machines)}
       <DataGrid rows={machines} columns={columns} pageSize={20} rowHeight={45} />
     </div>
   );

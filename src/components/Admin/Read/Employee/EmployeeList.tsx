@@ -59,7 +59,7 @@ const EmployeeList: React.FC<Props> = () => {
     );
 
   return (
-    <div className='resource-table'>
+    <div style={{ height: 700 }}>
       <DataGrid rows={emps} columns={columns} pageSize={20} rowHeight={45} />
     </div>
   );

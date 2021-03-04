@@ -75,7 +75,7 @@ const WorkshopList: React.FC = () => {
       </div>
     );
   return (
-    <div className='resource-table'>
+    <div style={{ height: 700 }}>
       <DataGrid rows={workshops} columns={columns} pageSize={20} rowHeight={45} />
     </div>
   );

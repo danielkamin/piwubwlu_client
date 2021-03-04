@@ -52,7 +52,7 @@ const DegreeList: React.FC = () => {
       </div>
     );
   return (
-    <div className='resource-table'>
+    <div style={{ height: 700 }}>
       <DataGrid rows={departments} columns={columns} pageSize={15} rowHeight={45} />
     </div>
   );

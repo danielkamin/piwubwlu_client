@@ -28,8 +28,8 @@ const MainLayout: React.FC<Props> = ({ children }) => {
   const context = useUserContext();
   return (
     <ThemeProvider theme={CustomTheme}>
+      <Nav />
       <main className='main-container'>
-        <Nav />
         <div className='container'>{children}</div>
       </main>
       <Footer />

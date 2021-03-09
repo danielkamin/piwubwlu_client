@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,22 +18,21 @@ const useStyles = makeStyles((theme) => ({
 interface Props {
   name: string;
   english_name: string;
-  id: number;
+  link: string;
+  roomNumber?: string;
 }
 const MyCard: React.FC<Props> = (props) => {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
-      <CardContent>
-        <Typography variant='h5'>{props.name}</Typography>
-        <Typography variant='subtitle1'>{props.english_name}</Typography>
-        <CardActions>
-          <Button component={Link} to={'/laboratoria/' + props.id} variant='outlined' color='secondary'>
-            Dowiedz się więcej...
-          </Button>
-        </CardActions>
-      </CardContent>
-    </Card>
+    <div className='lab-card'>
+      <Link to={props.link}>
+        <div className='lab-card-content'>
+          <h4>{props.name}</h4>
+          <h5>{props.english_name}</h5>
+          {props.roomNumber && <p>Nr sali: {props.roomNumber}</p>}
+        </div>
+      </Link>
+    </div>
   );
 };
 export default MyCard;

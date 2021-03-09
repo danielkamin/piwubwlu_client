@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Link, useParams } from 'react-router-dom';
 import { ILabDetails } from '../../types';
 import { Container, Typography, Paper } from '@material-ui/core';
+import MyCard from '../../../Main/Resources/Labs/MyCard';
 interface Params {
   id: string;
 }
@@ -28,30 +29,29 @@ const LabDetails: React.FC = () => {
       </div>
     );
   return (
-    <Container maxWidth='sm'>
-      <div className='container-spacing'>
-        <Paper className='flex-center-column'>
-          <Typography variant='h3'>{labDetails?.name}</Typography>
+    <Container maxWidth='md'>
+      <div className='lab-details'>
+        <div className='lab-details-title'>
+          <Typography variant='h4'>{labDetails?.name}</Typography>
           <Typography variant='h5'>{labDetails?.english_name}</Typography>
-          <br />
-          <Typography variant='body1'>
-            <b>Pracownie specjalistyczne należącego do tego laboratorium:</b>
-          </Typography>
-          {labDetails?.Workshops.map((item) => (
-            <Typography variant='body2' component={Link} to={'/pracownie/' + item.id}>
-              nazwa: {item.name} / name: {item.english_name} / nr sali: {item.room_number} <br></br>
-            </Typography>
-          ))}
           <br />
           <Typography variant='body1'>
             <b>Osoba nadzorująca:</b>
           </Typography>
           {labDetails?.Employee !== null && (
             <Typography variant='body1' component={Link} to={'/kadra/' + labDetails?.Employee.userId}>
-              Nazwisko: {labDetails?.Employee.User.lastName} Imię: {labDetails?.Employee.User.firstName}
+              {labDetails?.Employee.User.lastName} {labDetails?.Employee.User.firstName}
             </Typography>
           )}
-        </Paper>
+        </div>
+        <div className='lab-details-content'>
+          <Typography variant='body1'>Pracownie specjalistyczne należącego do tego laboratorium:</Typography>
+          <div className='labs-grid'>
+            {labDetails?.Workshops.map((item) => (
+              <MyCard key={item.id} name={item.name} english_name={item.english_name} roomNumber={item.room_number.toString()} link={'/pracownie/' + item.id} />
+            ))}
+          </div>
+        </div>
       </div>
     </Container>
   );

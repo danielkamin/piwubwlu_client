@@ -49,8 +49,7 @@ const MyProfile: React.FC = () => {
       </div>
     );
   return (
-    <Container maxWidth='sm' className='container-spacing'>
-      <CssBaseline />
+    <Container maxWidth='sm'>
       <Paper elevation={6} className={classes.paper}>
         <Avatar src={currentPhoto} className={classes.avatarLarge} />
         <Button component='label' color='secondary' endIcon={<ImageIcon />}>

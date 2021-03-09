@@ -5,7 +5,7 @@ export const WorkshopSchema = yup.object({
     room_number: yup.string().required('Numer sali jest wymagany'),
     typeId: yup.number().required(),
     labId: yup.number().required(),
-    additionalInfo: yup.string().max(200,'Maksymalna ilość znaków to 200'),
+    additionalInfo: yup.string().max(450,'Maksymalna ilość znaków to 450'),
   });
 export const UserSchema = yup.object({
     firstName:yup.string().required('Imię jest wymagane'),
@@ -30,7 +30,7 @@ export const MachineSchema = yup.object({
     maxUnit: yup.number().required('Podaj wartość pomiędzy 1 - 20').min(1,'Za mała wartość').max(20,'Za duża wartość'),
     machineState: yup.string().required(),
     workshopId: yup.number().required('Pracownia jest wymagana'),
-    additionalInfo: yup.string().max(200,'Maksymalna ilość znaków to 200'),
+    additionalInfo: yup.string().max(450,'Maksymalna ilość znaków to 450'),
 });
 export const LabSchema = yup.object({
     name: yup.string().required('Nazwa jest wymagana'),

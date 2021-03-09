@@ -69,7 +69,7 @@ const LabList: React.FC = () => {
     );
 
   return (
-    <div className='resource-table'>
+    <div style={{ height: 700 }}>
       <DataGrid rows={labs} columns={columns} pageSize={20} rowHeight={45} />
     </div>
   );

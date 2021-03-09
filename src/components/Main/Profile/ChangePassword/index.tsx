@@ -27,7 +27,6 @@ const ChangePassword: React.FC = () => {
 
   return (
     <Container maxWidth='sm' className='container-spacing'>
-      <CssBaseline />
       <Paper elevation={6} className={classes.paper}>
         <Avatar className={classes.avatar}>
           <VpnKeyIcon />

@@ -1,58 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
-import FullCalendar, { EventInput, EventClickArg } from '@fullcalendar/react';
-import { getData, putData } from '../../../../api/index';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
 import { Button, Container, CircularProgress, Typography, TextField, Paper } from '@material-ui/core';
-import { getAccessToken } from '../../../../utils/api/accessToken';
-import { useAlertContext, AlertType } from '../../../../context/AlertContext';
-import MyDateTimePicker from '../../../Shared/Inputs/MyDateTimePicker';
-import { ReservationSchema } from '../../schemas';
+import { getData,putData } from '../../../api/index';
+import { useHistory } from 'react-router-dom';
+import { getAccessToken } from '../../../utils/api/accessToken';
+import { useAlertContext, AlertType } from '../../../context/AlertContext';
+import MyDateTimePicker from '../Inputs/MyDateTimePicker';
+import { ReservationSchema } from '../../Main/schemas';
 import { Formik, Form, Field } from 'formik';
-import areIntervalsOverlapping from 'date-fns/areIntervalsOverlapping';
-import useStyles from '../../styles';
-function renderEventContent(eventInfo: any) {
-  return (
-    <>
-      <b>{eventInfo.timeText}</b>
-      <br></br>
-      <i>{eventInfo.event.title}</i>
-    </>
-  );
-}
-interface Props {
-  id: string;
-  isMachineActive: boolean | undefined;
-  maxUnit: number | undefined;
-  timeUnit: string;
-  startDate: string;
-  endDate: string;
-  machineId: number;
-  state: string;
-}
+import {dateRangeOverlaps,calculateEndDate} from './helpers'
+import useStyles from '../styles';
 
-const UpdateReservation: React.FC<Props> = ({ id, isMachineActive, maxUnit, timeUnit, startDate, endDate, machineId, state }) => {
+
+const UpdateResCalendar = ({ id, isMachineActive, maxUnit, timeUnit, startDate, endDate, machineId, state }) => {
   const classes = useStyles();
   const history = useHistory();
   const alertContext = useAlertContext();
-  const formRef = useRef<HTMLFormElement>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [reservations, setReservations] = useState<EventInput[]>();
+  const formRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  const [reservations, setReservations] = useState();
   useEffect(() => {
     getReservations();
   }, []);
   const getReservations = async () => {
     const response = await getData('machines/rent/' + machineId, getAccessToken());
-    //lepsze niż if przy każdym obrocie
-    let tempReservations: EventInput[] = [];
+    let tempReservations = [];
     tempReservations.push({
       start: new Date(startDate),
       end: new Date(endDate),
       id: id,
       title: `Stan mojej rezerwacji: ${state}`
     });
-    response.map((item: any) => {
+    response.map((item) => {
       if (item.id !== id) {
         tempReservations.push({
           start: new Date(item.start_date),
@@ -65,22 +43,19 @@ const UpdateReservation: React.FC<Props> = ({ id, isMachineActive, maxUnit, time
     setReservations(tempReservations);
     setLoading(false);
   };
-  const checkDates = (data: any): boolean => {
-    let status = true;
-    data.end_date = calcEndDate(data.unitCount, data.start_date);
-    reservations?.forEach((item: any) => {
-      if (item.id !== id && areIntervalsOverlapping({ start: data.start_date, end: data.end_date }, { start: item.start, end: item.end }) === true) {
-        status = false;
-      }
-    });
-    return status;
+  const checkDates = (data) => {
+    let statusMessage = '';
+        data.end_date = calculateEndDate(data.unitCount, data.start_date,timeUnit);
+        let reservationsArrayLength = reservations.length;
+        for(let i=0;i<reservationsArrayLength;i++){
+          if(reservations[i].id !== id ) statusMessage=dateRangeOverlaps(new Date(data.start_date), new Date(data.end_date),new Date(reservations[i].start),new Date(reservations[i].end));
+          if(statusMessage!=='') {
+            return statusMessage
+          }
+        }
+        return statusMessage;
   };
-  const calcEndDate = (units: number, start_date: Date) => {
-    let tmpTimeUnit: number = +timeUnit;
-    let minutes = units * tmpTimeUnit;
-    return new Date(start_date.getTime() + 60000 * minutes);
-  };
-  const updateReservation = async (data: any) => {
+  const updateReservation = async (data) => {
     data.machineId = machineId;
     await putData('rental/' + id, getAccessToken(), { start_date: data.start_date, end_date: data.end_date, machineId: data.machineId })
       .then((res) => {
@@ -114,14 +89,12 @@ const UpdateReservation: React.FC<Props> = ({ id, isMachineActive, maxUnit, time
           initialValues={{ start_date: new Date(startDate), unitCount: calcTimeUnits() }}
           onSubmit={(data, { setSubmitting, setErrors }) => {
             setSubmitting(true);
-            //sprawdzenie górnego limutu uczelnianego
-            if (checkDates(data) === false) {
-              setErrors({ start_date: 'W tym czasie maszyna jest zajęta', unitCount: 'W tym czasie maszyna jest zajęta' });
-            } else updateReservation(data);
+            let errorMessage = checkDates(data);
+              errorMessage!==''?setErrors({ start_date: errorMessage, unitCount: '' }):updateReservation(data);
             setSubmitting(false);
           }}
         >
-          {({ values, isSubmitting, errors }) => (
+          {({ isSubmitting }) => (
             <Form ref={formRef} className={classes.rentForm}>
               <MyDateTimePicker name='start_date' id='start-date' disabled={!isMachineActive} />
               <Typography variant='body1'>
@@ -143,25 +116,9 @@ const UpdateReservation: React.FC<Props> = ({ id, isMachineActive, maxUnit, time
           )}
         </Formik>
       </Paper>
-      <FullCalendar
-        allDaySlot={false}
-        locale='pl'
-        plugins={[dayGridPlugin, timeGridPlugin]}
-        eventContent={renderEventContent}
-        initialView='timeGridWeek'
-        weekends={true}
-        buttonText={{ today: 'Dzisiaj' }}
-        events={reservations}
-        slotMinTime='07:15:00'
-        slotMaxTime='21:15:00'
-        expandRows={true}
-        eventClick={(event: EventClickArg) => {
-          console.log(event);
-          history.push('/rezerwacje/' + event.event.id);
-        }}
-      />
+        
     </Container>
   );
 };
 
-export default UpdateReservation;
+export default UpdateResCalendar;

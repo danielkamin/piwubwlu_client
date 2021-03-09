@@ -30,7 +30,6 @@ const DeleteAccount: React.FC = () => {
 
   return (
     <Container maxWidth='sm' className='container-spacing'>
-      <CssBaseline />
       <Paper elevation={6} className={classes.paper}>
         <DeleteForeverOutlinedIcon color='error' fontSize='large' />
         <Typography component='h1' variant='h5'>

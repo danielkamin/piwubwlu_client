@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getData } from '../../../../api/index';
-import { TextField, Container, MenuItem } from '@material-ui/core';
+import { TextField, Container, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { getAccessToken } from '../../../../utils/api/accessToken';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { IEmployee, Department, Degree } from '../../types';
@@ -49,7 +49,8 @@ const Employees: React.FC = () => {
   const keyFiltering = (entry: [string, string], filteredEmployes: IEmployee[]) => {
     if (entry[1] !== '') {
       return filteredEmployes.filter((emp) => {
-        if (Object.getOwnPropertyDescriptor(emp.Employee!, entry[0])?.value.name === entry[1]) return emp;
+        const obcjectKey = Object.getOwnPropertyDescriptor(emp.Employee!, entry[0])?.value;
+        if (obcjectKey?.name !== undefined) if (obcjectKey?.name === entry[1]) return emp;
       });
     } else return filteredEmployes;
   };
@@ -61,11 +62,12 @@ const Employees: React.FC = () => {
     );
 
   return (
-    <Container maxWidth='md' className='container-spacing'>
-      <PageTitle title='Kadra Pracownicza' />
-      <div className='sort-form'>
+    <Container maxWidth='md'>
+      <PageTitle title='Pracownicy' />
+      <div className='employees-form'>
         <b>Wyszukaj po:</b>
         <TextField
+          label='Katedra'
           select
           name='dep-filter'
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,7 +76,9 @@ const Employees: React.FC = () => {
           }}
           value={filterValues.Department}
         >
-          <MenuItem value=''>Katedra</MenuItem>
+          <MenuItem value='' selected>
+            <em>Wszystko</em>
+          </MenuItem>
           {departments.map((dep) => (
             <MenuItem key={dep.id} value={dep.name}>
               {dep.name}
@@ -82,6 +86,7 @@ const Employees: React.FC = () => {
           ))}
         </TextField>
         <TextField
+          label='Tytuł nauk.'
           select
           name='dep-filter'
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,7 +95,9 @@ const Employees: React.FC = () => {
           }}
           value={filterValues.Degree}
         >
-          <MenuItem value=''>Tytuł nauk</MenuItem>
+          <MenuItem value=''>
+            <em>Wszystko</em>
+          </MenuItem>
           {degrees.map((deg) => (
             <MenuItem key={deg.id} value={deg.name}>
               {deg.name}

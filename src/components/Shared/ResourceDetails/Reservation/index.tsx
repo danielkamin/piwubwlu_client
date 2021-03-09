@@ -8,7 +8,7 @@ import { API_URL } from '../../../../utils/constants';
 import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 import format from 'date-fns/format';
 import useStyles from '../../styles';
-import UpdateReservation from './updateReservation';
+import UpdateResCalendar from '../../Calendar/UpdateResCalendar';
 type Params = {
   id: string;
 };
@@ -80,7 +80,7 @@ const ReservationDetails: React.FC = () => {
         </Container>
       </section>
       {isOwned && (
-        <UpdateReservation
+        <UpdateResCalendar
           maxUnit={reservation?.Machine.maxUnit}
           timeUnit={reservation!.Machine.timeUnit}
           endDate={reservation!.end_date}

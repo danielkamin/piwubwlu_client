@@ -38,17 +38,10 @@ const MainSwitch: React.FC = () => {
             <Switch>
               <Route path='/' exact component={HomePage} />
               <Route path='/login' component={Login} />
-              <Route path='/moje_konto/:path?' exact>
-                <ProfileLayout>
-                  <Switch>
-                    <ProtectedRoute path='/moje_konto' exact component={UpdateProfile} />
-                    <ProtectedRoute path='/moje_konto/zmiana_hasla' component={ChangePassword} />
-                    <ProtectedRoute path='/moje_konto/rezerwacje' component={MyReservations} />
-                    <ProtectedRoute path='/moje_konto/usun_konto' component={DeleteAccount} />
-                  </Switch>
-                </ProfileLayout>
-              </Route>
-
+              <ProtectedRoute path='/moje_konto' exact component={UpdateProfile} />
+              <ProtectedRoute path='/moje_konto/zmiana_hasla' component={ChangePassword} />
+              <ProtectedRoute path='/moje_konto/rezerwacje' component={MyReservations} />
+              <ProtectedRoute path='/moje_konto/usun_konto' component={DeleteAccount} />
               <Route path='/rejestracja' component={Register} />
               <Route path='/regulamin' component={PrivacyPolicy} />
               <Route path='/nowe_haslo/:token' component={ResetPassword} />

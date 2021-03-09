@@ -7,9 +7,7 @@ const Home: React.FC = () => {
   const classes = useStyles();
   return (
     <div>
-      <Banner />
-      <Container maxWidth='xl' className='home-container'>
-        <Typography variant='h3'>Nasze zasoby uczelniane</Typography>
+      <Container maxWidth='xl'>
         <Cards />
       </Container>
     </div>

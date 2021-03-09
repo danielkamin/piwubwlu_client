@@ -7,6 +7,7 @@ import MyCheckBox from '../../../Shared/Inputs/MyCheckBox';
 import { RegisterValues } from '../../types';
 import { RegisterSchema } from '../../schemas';
 import useStyles from '../../styles';
+import LogoPB from '../../../../assets/Images/LogoPB.png';
 import { authRoute } from '../../../../api/index';
 import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 const Register: React.FC = () => {
@@ -27,12 +28,11 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className='black-hidden login-register'>
-      <img src='' className='img-cover' />
-      <Container component='main' maxWidth='xs' className='form'>
+    <div className=''>
+      <Container component='main' maxWidth='xs'>
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar src='' className={classes.avatarLarge} />
+          <Avatar src={LogoPB} className={classes.avatarLarge} />
           <Typography component='h1' variant='h5'>
             Rejestracja
           </Typography>

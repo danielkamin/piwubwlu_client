@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "PWUL",
+  "name": "Platforma wynajmu urządzeń laboratoryjnych na Wydziale Mechanicznym",
   "icons": [
     {
       "src": "favicon.ico",

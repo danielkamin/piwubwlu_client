@@ -2,13 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getData } from '../../../../api/index';
 import queryString from 'query-string';
-import { Container } from '@material-ui/core';
 import { getAccessToken } from '../../../../utils/api/accessToken';
 import SortData from '../../../Shared/Groups/SortData';
 import Pagination from '../../../Shared/Groups/Pagination';
+import PageTitle from '../../../Shared/Display/PageTitle';
 import SearchData from '../../../Shared/Groups/SearchData';
 import { ICardInfo } from '../../types';
-import PageTitle from '../../../Shared/Display/PageTitle';
 const DisplayMachines: React.FC = () => {
   const history = useHistory();
   const { search } = useLocation();
@@ -21,8 +20,8 @@ const DisplayMachines: React.FC = () => {
   const [elementsPerPage, setElementsPerPage] = useState(5);
   const [workshops, setWorkshops] = useState<ICardInfo[]>([]);
   useEffect(() => {
+    setNameSearch(query.q === undefined ? '' : query.q);
     getWorkshops();
-    console.log(search);
   }, [search]);
 
   const getWorkshops = async () => {
@@ -44,12 +43,14 @@ const DisplayMachines: React.FC = () => {
   const paginate = (page: number) => setCurrentPage(page);
 
   return (
-    <Container maxWidth='xl' className='container-spacing'>
-      <PageTitle title='Urządzenia Badawcze' />
-      <SearchData searchFunction={searchWorkshop} />
+    <div className='custom-container'>
+      <PageTitle title='Urządzenia badawcze' />
+      <div className='custom-search'>
+        <SearchData searchFunction={searchWorkshop} buttonColor='black' placeholder='Wyszukaj maszynę' />
+      </div>
       <SortData data={currentElements} sortQuery={query.sort} qQuery={nameSearch} linkString='/maszyny' loading={loading} />
       <Pagination elementsPerPage={elementsPerPage} paginate={paginate} totalElements={workshops.length} currentPage={currentPage} />
-    </Container>
+    </div>
   );
 };
 

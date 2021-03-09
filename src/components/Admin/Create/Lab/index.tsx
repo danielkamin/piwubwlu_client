@@ -33,7 +33,6 @@ const NewLab: React.FC = () => {
   };
   return (
     <Container maxWidth='sm' component='main'>
-      <CssBaseline />
       <Paper elevation={6} className={classes.paper}>
         <Avatar className={classes.avatar}>
           <AddIcon />

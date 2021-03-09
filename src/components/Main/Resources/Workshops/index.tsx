@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { getData } from '../../../../api/index';
 import queryString from 'query-string';
-import { Container, Button, TextField } from '@material-ui/core';
-import { getAccessToken } from '../../../../utils/api/accessToken';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import SortData from '../../../Shared/Groups/SortData';
+import { getAccessToken } from '../../../../utils/api/accessToken';
+import Pagination from '../../../Shared/Groups/Pagination';
+import SearchData from '../../../Shared/Groups/SearchData';
 import PageTitle from '../../../Shared/Display/PageTitle';
 import { ICardInfo } from '../../types';
 const DisplayWorkshops: React.FC = () => {
@@ -16,36 +16,42 @@ const DisplayWorkshops: React.FC = () => {
   const [nameSearch, setNameSearch] = useState(() => {
     return query.q === undefined ? '' : query.q;
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [elementsPerPage, setElementsPerPage] = useState(15);
   const [workshops, setWorkshops] = useState<ICardInfo[]>([]);
   useEffect(() => {
+    setNameSearch(query.q === undefined ? '' : query.q);
     getWorkshops();
   }, [search]);
 
   const getWorkshops = async () => {
-    await getData(`workshops/list?page=1&limit=5`, getAccessToken()).then((res) => {
-      setWorkshops(res);
-    });
+    await getData(`workshops/list${search}`, getAccessToken())
+      .then((res) => {
+        setWorkshops(res);
+      })
+      .catch((err) => console.log(err));
     setLoading(false);
   };
 
-  const handleNameSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNameSearch(e.target.value);
-  };
-  const searchWorkshop = (e: React.SyntheticEvent) => {
+  const searchWorkshop = (e: React.SyntheticEvent, searchValue: string | undefined) => {
+    console.log(searchValue);
     e.preventDefault();
-    if (nameSearch !== '') history.push(`/pracownie?q=${nameSearch}`);
+    if (searchValue !== '') history.push(`/pracownie?q=${searchValue}`);
     else history.push('/pracownie');
   };
-
+  const indexOfLastPost = currentPage * elementsPerPage;
+  const indexOfFirstPost = indexOfLastPost - elementsPerPage;
+  const currentElements = workshops.slice(indexOfFirstPost, indexOfLastPost);
+  const paginate = (page: number) => setCurrentPage(page);
   return (
-    <Container maxWidth='xl' className='container-spacing'>
-      <PageTitle title='Pracownie' />
-      <form onSubmit={(e: React.SyntheticEvent) => searchWorkshop(e)}>
-        <TextField value={nameSearch} onChange={handleNameSearchChange} />
-        <Button type='submit'>Szukaj</Button>
-      </form>
-      <SortData data={workshops} sortQuery={query.sort} qQuery={nameSearch} loading={loading} linkString='/pracownie' />
-    </Container>
+    <div className='custom-container'>
+      <PageTitle title='Pracownie specjalistyczne' />
+      <div className='custom-search'>
+        <SearchData searchFunction={searchWorkshop} buttonColor='black' placeholder='Wyszukaj pracownię' />
+      </div>
+      <SortData data={currentElements} sortQuery={query.sort} qQuery={nameSearch} loading={loading} linkString='/pracownie' />
+      <Pagination elementsPerPage={elementsPerPage} paginate={paginate} totalElements={workshops.length} currentPage={currentPage} />
+    </div>
   );
 };
 

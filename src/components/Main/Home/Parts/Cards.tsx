@@ -1,23 +1,25 @@
 import React from 'react';
 import HomeCard from './HomeCard';
-import { API_URL } from '../../../../utils/constants';
+import laboratoria from '../../../../assets/Images/laboratoria.jpg';
+import maszyny from '../../../../assets/Images/maszyny.jpg';
+import pracownicy from '../../../../assets/Images/pracownicy.jpg';
+import pracownie from '../../../../assets/Images/pracownie.jpg';
 interface CardInfo {
   title: string;
-  details: string;
   link: string;
   image: string;
 }
 const cards: CardInfo[] = [
-  { title: 'Laboratoria', details: 'Dowiedz się więcej o naszych laboratoriach', link: '/laboratoria', image: API_URL + '/uploads/display-image4.png' },
-  { title: 'Pracownie', details: 'Dowiedz się więcej o naszych pracowniach', link: '/pracownie', image: API_URL + '/uploads/display-image3.jpg' },
-  { title: 'Urządzenia Badawcze', details: 'Dowiedz się więcej o naszych urządzeniach badawczych', link: '/maszyny', image: API_URL + '/uploads/display-image1.jpg' },
-  { title: 'Pracownicy', details: 'Dowiedz się więcej o naszych pracownikach', link: '/kadra', image: API_URL + '/uploads/display-image2.jpg' }
+  { title: 'Laboratoria', link: '/laboratoria', image: pracownie },
+  { title: 'Pracownie', link: '/pracownie', image: laboratoria },
+  { title: 'Urządzenia Badawcze', link: '/maszyny', image: maszyny },
+  { title: 'Pracownicy', link: '/kadra', image: pracownicy }
 ];
 const Cards: React.FC = () => {
   return (
-    <div className='card-container'>
+    <div className='home-grid'>
       {cards.map((item) => (
-        <HomeCard details={item.details} title={item.title} link={item.link} image={item.image} key={item.title} />
+        <HomeCard title={item.title} link={item.link} image={item.image} key={item.title} />
       ))}
     </div>
   );

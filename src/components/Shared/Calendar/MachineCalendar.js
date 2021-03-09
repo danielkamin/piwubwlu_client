@@ -12,22 +12,7 @@ import { Button, Container, CircularProgress, Typography, TextField, Paper } fro
 import useStyles from '../styles';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {messages,localizer} from './constants'
-function dateRangeOverlaps(a_start, a_end, b_start, b_end) {
-  let time_a_start = a_start.toLocaleTimeString(navigator.language,{ hour: '2-digit', minute:'2-digit'});
-  let time_a_end = a_end.toLocaleTimeString(navigator.language,{ hour: '2-digit', minute:'2-digit'});
-  let time_b_start = b_start.toLocaleTimeString(navigator.language,{ hour: '2-digit', minute:'2-digit'});
-  let time_b_end = b_end.toLocaleTimeString(navigator.language,{ hour: '2-digit', minute:'2-digit'});
-  if (a_start < b_start && b_start < a_end){  
-    return `Koniec nowej rezerwacji (${time_a_end}) nachodzi na złożoną już rezerwację, trwającą pomiędzy ${time_b_start}, a ${time_b_end}`;
-  }
-  if (a_start < b_end  && b_end < a_end){
-    return `Początek nowej rezerwacji (${time_a_start}) nachodzi na złożoną już rezerwację, trwającą pomiędzy ${time_b_start}, a ${time_b_end}`;
-  }
-  if (b_start <  a_start && a_end < b_end){
-    return `Nowa rezerwacja w pełni nachodzi na istniejącą już rezerwacją, trwającą pomiędzy ${time_b_start}, a ${time_b_end}`;
-  }
-  return '';
-}
+import {dateRangeOverlaps,calculateEndDate} from './helpers'
 
 const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
     const history = useHistory();
@@ -66,7 +51,7 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
       };
       const checkDates = (data) => {
         let statusMessage = '';
-        data.end_date = calculateEndDate(data.unitCount, data.start_date);
+        data.end_date = calculateEndDate(data.unitCount, data.start_date,timeUnit);
         let reservationsArrayLength = reservations.length;
         for(let i=0;i<reservationsArrayLength;i++){
           statusMessage=dateRangeOverlaps(new Date(data.start_date), new Date(data.end_date),new Date(reservations[i].start),new Date(reservations[i].end));
@@ -76,13 +61,6 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
         }
         return statusMessage;
       };
-      const calculateEndDate = (units, start_date) => {
-        let tmpTimeUnit = +timeUnit;
-        let minutes = units * tmpTimeUnit;
-        return new Date(start_date.getTime() + 60000 * minutes);
-      };
-
-
       if (loading)
       return (
         <div>
@@ -100,10 +78,7 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
             initialValues={{ start_date: new Date(), unitCount: 0 }}
             onSubmit={(data, { setSubmitting, setErrors }) => {
               setSubmitting(true);
-              console.time('test');
               let errorMessage = checkDates(data);
-              console.timeEnd('test');
-              console.log(errorMessage)
               errorMessage!==''?setErrors({ start_date: errorMessage, unitCount: '' }):newReservation(data);
               setSubmitting(false);
             }}

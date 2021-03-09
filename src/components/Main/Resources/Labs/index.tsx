@@ -20,11 +20,11 @@ const DisplayLabs: React.FC<Props> = () => {
     setLoading(false);
   };
   return (
-    <Container maxWidth='xl' className='container-spacing'>
+    <Container maxWidth='xl'>
       <PageTitle title='Laboratoria' />
-      <div className='workshops'>
+      <div className='labs-grid'>
         {labs.map((item) => (
-          <MyCard id={item.id} name={item.name} english_name={item.english_name} key={item.id} />
+          <MyCard link={'/laboratoria/' + item.id} name={item.name} english_name={item.english_name} key={item.id} />
         ))}
       </div>
     </Container>

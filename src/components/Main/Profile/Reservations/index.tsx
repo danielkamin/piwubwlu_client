@@ -6,7 +6,6 @@ import { getData } from '../../../../api';
 import ReservationsTable from './Parts/ReservationsTable';
 import { Reservation } from '../../types';
 import { useUserContext } from '../../../../context/UserContext';
-import MyCalendar from './Parts/MyCalendar';
 import ProfileCalendar from '../../../Shared/Calendar/ProfileCalendar';
 const MyReservations: React.FC = () => {
   const context = useUserContext();
@@ -38,23 +37,18 @@ const MyReservations: React.FC = () => {
     );
 
   return (
-    <Container maxWidth='md'>
-      <div className='container-spacing'>
-        <Typography variant='h5' style={{ color: 'purple' }}>
-          Moje wypożyczenia
-        </Typography>
+    <Container maxWidth='md' className='custom-container'>
+      <div>
+        <Typography variant='h5'>Moje wypożyczenia</Typography>
         <ReservationsTable data={owned} CB={getReservations} />
         {supervised != null && (
           <div>
             {' '}
-            <Typography variant='h5' style={{ color: 'red' }}>
-              Nadzorowane
-            </Typography>
+            <Typography variant='h5'>Nadzorowane</Typography>
             <ReservationsTable data={supervised} supervised CB={getReservations} />
           </div>
         )}
       </div>
-      {/* <MyCalendar ownedReservations={owned} supervisedReservations={supervised ? supervised : []} /> */}
       <ProfileCalendar ownedReservations={owned} supervisedReservations={supervised ? supervised : []} />
     </Container>
   );

@@ -10,13 +10,17 @@ import useStyles from '../../styles';
 import { API_URL } from '../../../../utils/constants';
 import ReCAPTCHA from 'react-google-recaptcha';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import PhoneIcon from '@material-ui/icons/Phone';
 import customAxios from '../../../../utils/api/customAxios';
+interface EmpContact {
+  email: string;
+  telephone: string;
+}
 const EmployeeDetails: React.FC = () => {
   const { id } = useParams<Params>();
   const classes = useStyles();
-
   const [loading, setLoading] = useState<boolean>(true);
-  const [empEmail, setEmpEmail] = useState<String | null>(() => {
+  const [empContact, setEmpContact] = useState<EmpContact | null>(() => {
     return null;
   });
   const [employeeDetails, setEmployeeDetails] = useState<IEmployee>();
@@ -29,13 +33,12 @@ const EmployeeDetails: React.FC = () => {
     setLoading(false);
   };
   const verifyCaptcha = async (value: string | null) => {
-    console.log(value);
     const newUrl = API_URL + '/api/utils/verify_captcha';
     const res = await customAxios(newUrl, {
       method: 'POST',
       data: { userId: id, captcha: value }
     }).then((res) => {
-      setEmpEmail(res.data.email);
+      setEmpContact({ email: res.data.email, telephone: res.data.telephone });
     });
   };
   if (loading)
@@ -45,12 +48,12 @@ const EmployeeDetails: React.FC = () => {
       </div>
     );
   return (
-    <Container maxWidth='xs'>
-      <div className='container-spacing'>
+    <Container maxWidth='xs' className={classes.spacing}>
+      <div className=''>
         <Paper className={classes.paper}>
           <div>
             {employeeDetails?.picturePath ? <Avatar src={API_URL + '/' + employeeDetails?.picturePath} className={classes.largeAvatar} /> : <Avatar className={classes.largeAvatar} />}
-            <Typography variant='h4' color='secondary'>
+            <Typography variant='h4'>
               {employeeDetails?.lastName} {employeeDetails?.firstName}
             </Typography>
           </div>
@@ -83,15 +86,25 @@ const EmployeeDetails: React.FC = () => {
             <Typography variant='body2' color='textSecondary'>
               Dodatkowe Informacje:
             </Typography>
-            <Typography variant='body1'>Dodatkowe Informacje:</Typography>
+            <Typography variant='body1'>{employeeDetails?.Employee?.information}</Typography>
+            <Typography variant='body2' color='textSecondary'>
+              Numer pokoju: <b>{employeeDetails?.Employee?.room}</b>
+            </Typography>
           </div>
-          <div className='email-link'>
-            {empEmail !== null ? (
-              <a href={`mailto:${empEmail}`}>
-                <Typography variant='body1'>
-                  <MailOutlineIcon /> {empEmail}
-                </Typography>
-              </a>
+          <div>
+            {empContact !== null ? (
+              <div>
+                <a href={`mailto:${empContact.email}`}>
+                  <Typography variant='body1'>
+                    <MailOutlineIcon /> {empContact.email}
+                  </Typography>
+                </a>
+                <a href={`tel:${empContact.telephone}`}>
+                  <Typography variant='body1'>
+                    <PhoneIcon /> {empContact.telephone}
+                  </Typography>
+                </a>
+              </div>
             ) : (
               <ReCAPTCHA sitekey='6Ldq9AUaAAAAACwhrbXsfRh0kEEbIeAk-SdOQ8M_' onChange={verifyCaptcha} />
             )}

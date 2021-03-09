@@ -119,9 +119,7 @@
   color: white;
   display: block;
 }
-.main-container {
-  min-height: 90vh;
-}
+
 .footer {
   text-align: center;
   position: relative;

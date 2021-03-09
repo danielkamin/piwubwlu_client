@@ -47,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
   wideSelect: {
     width: 150
+  },
+  spacing: {
+    marginBottom: '4rem',
+    marginTop: '4rem'
   }
 }));
 export default useStyles;

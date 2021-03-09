@@ -2,11 +2,13 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: '1.5rem'
+    padding: '1.5rem',
+    boxShadow: '0px 0px 4px 4px #EBEBEB '
   },
   avatar: {
     margin: theme.spacing(1),
@@ -20,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2)
   },
   avatarLarge: {
-    width: theme.spacing(9),
-    height: theme.spacing(9)
+    width: theme.spacing(10),
+    height: theme.spacing(10)
   },
   formControlGap: {
     marginTop: 7

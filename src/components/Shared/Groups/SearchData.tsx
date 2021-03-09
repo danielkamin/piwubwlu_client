@@ -3,35 +3,29 @@ import { Input, IconButton, InputAdornment, FormControl, InputLabel } from '@mat
 import SearchIcon from '@material-ui/icons/Search';
 interface Props {
   searchFunction: (e: React.SyntheticEvent, searchValue: string | undefined) => void;
+  buttonColor: string;
+  placeholder: string;
 }
 
-const SearchData: React.FC<Props> = ({ searchFunction }) => {
+const SearchData: React.FC<Props> = ({ searchFunction, buttonColor, placeholder }) => {
   const [searchInput, setSearchInput] = useState('');
   return (
-    <div>
-      <form
-        onSubmit={(e: React.SyntheticEvent) => {
-          searchFunction(e, searchInput);
+    <form
+      onSubmit={(e: React.SyntheticEvent) => {
+        searchFunction(e, searchInput);
+      }}
+    >
+      <input
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchInput(e.target.value);
         }}
-      >
-        <FormControl>
-          <InputLabel htmlFor='search-field'>Szukaj</InputLabel>
-          <Input
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSearchInput(e.target.value);
-            }}
-            id='search-field'
-            endAdornment={
-              <InputAdornment position='end'>
-                <IconButton type='submit'>
-                  <SearchIcon />
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-        </FormControl>
-      </form>
-    </div>
+        id='header-search'
+        placeholder={placeholder}
+      />
+      <button type='submit'>
+        <SearchIcon style={{ color: buttonColor }} />
+      </button>
+    </form>
   );
 };
 

@@ -9,6 +9,8 @@ import useStyles from '../../styles';
 import { useUserContext } from '../../../../context/UserContext';
 import { API_URL } from '../../../../utils/constants';
 import WorkshopCalendar from '../../Calendar/WorkshopCalendar';
+import NotFound from '../../../../assets/Images/not-found.webp';
+import MyCard from '../../../Main/Resources/Labs/MyCard';
 const WorkshopDetails: React.FC = () => {
   const { id } = useParams<Params>();
   const classes = useStyles();
@@ -32,44 +34,44 @@ const WorkshopDetails: React.FC = () => {
 
   return (
     <Container maxWidth='xl'>
-      <div className='container-spacing'>
-        <Container maxWidth='sm'>
-          <Paper className={classes.paper}>
-            <div className='image-details'>{workshopDetails?.imagePath !== null && <img src={API_URL + '/' + workshopDetails?.imagePath} />}</div>
-            <Typography variant='h3'>{workshopDetails?.name}</Typography>
-            <Typography variant='h5'>{workshopDetails?.english_name}</Typography>
-            <Typography variant='body1'>{workshopDetails?.room_number}</Typography>
-            {workshopDetails?.WorkshopType ? (
-              <Typography variant='body1'>
-                Typ pracowni: {workshopDetails?.WorkshopType.name} <br></br> Workshop type: {workshopDetails?.WorkshopType.english_name}
-              </Typography>
-            ) : (
-              <Typography variant='body1'>
-                Typ pracowni: Nie określono<br></br> Workshop type: Nie określono
-              </Typography>
-            )}
-
-            <br></br>
-            <Typography variant='body1'>
-              <b>Wyposażenie pracowni: </b>
+      <div className='page-details'>
+        <div className='image-details'>{workshopDetails?.imagePath !== null ? <img src={API_URL + '/' + workshopDetails?.imagePath} /> : <img src={NotFound} />}</div>
+        <div className='page-details-content'>
+          <Typography variant='h3'>{workshopDetails?.name}</Typography>
+          <Typography variant='h5'>{workshopDetails?.english_name}</Typography>
+          <br />
+          <Typography variant='body1'>Numer sali: {workshopDetails?.room_number}</Typography>
+          <br />
+          <Typography variant='body1'>Osoby nadzorujące:</Typography>
+          {workshopDetails?.Employees.map((item) => (
+            <Typography variant='body2' component={Link} to={'/kadra/' + item.userId} key={item.id}>
+              <b>
+                {item.User.lastName} {item.User.firstName}
+              </b>
             </Typography>
-            {workshopDetails?.Machines.map((item) => (
-              <Typography variant='body2' component={Link} to={'/maszyny/' + item.id} key={item.id}>
-                nazwa: {item.name} / name: {item.english_name} <br></br>
-              </Typography>
-            ))}
-            <br></br>
+          ))}
+          <br />
+          {workshopDetails?.WorkshopType ? (
             <Typography variant='body1'>
-              <b>Osoby nadzorujące</b>
+              Typ pracowni: {workshopDetails?.WorkshopType.name} <br></br> Workshop type: {workshopDetails?.WorkshopType.english_name}
             </Typography>
-            {workshopDetails?.Employees.map((item) => (
-              <Typography variant='body2' component={Link} to={'/kadra/' + item.userId} key={item.id}>
-                Nazwisko: {item.User.lastName} / Imię: {item.User.firstName}
-              </Typography>
-            ))}
-          </Paper>
-        </Container>
+          ) : (
+            <Typography variant='body1'>
+              Typ pracowni: Nie określono<br></br> Workshop type: Nie określono
+            </Typography>
+          )}
+        </div>
+        <br />
       </div>
+      <div className='labs-grid'>
+        <Typography variant='body1'>
+          <b>Wyposażenie pracowni: </b>
+        </Typography>
+        {workshopDetails?.Machines.map((item) => (
+          <MyCard key={item.id} link={'/maszyny/' + item.id} name={item.name} english_name={item.english_name} />
+        ))}
+      </div>
+      <br></br>
       {context?.loggedIn && <WorkshopCalendar id={id} />}
     </Container>
   );

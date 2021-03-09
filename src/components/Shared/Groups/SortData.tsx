@@ -3,7 +3,8 @@ import { useHistory } from 'react-router-dom';
 import { MenuItem, Select } from '@material-ui/core';
 import { ICardInfo } from '../types';
 import { API_URL } from '../../../utils/constants';
-import MyCard from '../Display/MyCard';
+import NotFoundImg from '../../../assets/Images/not-found.webp';
+import HomeCard from '../../Main/Home/Parts/HomeCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
 interface Props {
   sortQuery: string | string[] | null;
@@ -36,9 +37,9 @@ const SortData: React.FC<Props> = ({ sortQuery, data, qQuery, linkString, loadin
           <MenuItem value='desc'>Nazwa - malejąco</MenuItem>
         </Select>
       </div>
-      <div className='workshops'>
+      <div className='resource-grid'>
         {data.map((item) => (
-          <MyCard key={item.id} name={item.name} english_name={item.english_name} imagePath={API_URL + '/' + item.imagePath} id={item.id} linkTo={linkString} />
+          <HomeCard key={item.id} title={item.name} subTitle={item.english_name} image={item.imagePath !== null ? API_URL + '/' + item.imagePath : NotFoundImg} link={linkString + '/' + item.id} />
         ))}
       </div>
     </div>

@@ -3,6 +3,7 @@ import { setAccessToken, setRoles, getRoles } from '../../../../utils/api/access
 import MyTextField from '../../../Shared/Inputs/MyTextField';
 import { LoginValues } from '../../types';
 import { LoginSchema } from '../../schemas';
+import LogoPB from '../../../../assets/Images/LogoPB.png';
 import { Button, TextField, Container, Avatar, Typography, CssBaseline, FormControlLabel, Checkbox } from '@material-ui/core';
 import { useHistory, Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
@@ -28,12 +29,11 @@ const Login: React.FC = () => {
       });
   };
   return (
-    <div className='black-hidden login-register'>
-      <img src='' className='img-cover' />
-      <Container className='form' maxWidth='xs' component='main'>
+    <div>
+      <Container maxWidth='xs' component='main'>
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar src='' className={classes.avatarLarge} />
+          <Avatar src={LogoPB} className={classes.avatarLarge} />
           <Typography component='h1' variant='h5'>
             Logowanie
           </Typography>

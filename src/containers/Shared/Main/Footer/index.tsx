@@ -1,6 +1,9 @@
 import React from 'react';
 import { Typography } from '@material-ui/core';
 import { API_URL } from '../../../../utils/constants';
+import instagram from '../../../../assets/Images/PB_socialicon_instagram.png';
+import facebook from '../../../../assets/Images/PB_socialicon_fb.png';
+import youtube from '../../../../assets/Images/PB_socialicon_youtube.png';
 
 const Footer: React.FC = () => {
   return (
@@ -14,13 +17,13 @@ const Footer: React.FC = () => {
         </Typography>
         <div className='socials'>
           <a title='przejdź do facebook PB' href='https://pl-pl.facebook.com/politechnikabialostocka/' target='_blank' rel='noopener noreferrer'>
-            <img alt='przejdź do facebook PB' src='../../../../assets/Images/PB_socialicon_fb.png' />
+            <img alt='przejdź do facebook PB' src={facebook} />
           </a>
           <a title='przejdź do instagram PB' href='https://www.instagram.com/politechnika_bialostocka/' target='_blank' rel='noopener noreferrer'>
-            <img alt='przejdź do instagram PB' src='../../../../assets/Images/PB_socialicon_instagram.png' />
+            <img alt='przejdź do instagram PB' src={instagram} />
           </a>
           <a title='przejdź do youtube PB' href='https://www.youtube.com/channel/UComx9YaRB1AlVQ9tQkelQjw/' target='_blank' rel='noopener noreferrer'>
-            <img alt='przejdź do youtube PB' src='../../../../assets/Images/PB_socialicon_youtube.png' />
+            <img alt='przejdź do youtube PB' src={youtube} />
           </a>
         </div>
         <Typography variant='caption'>Copyright © 2020 Politechnika Białostocka</Typography>

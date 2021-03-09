@@ -8,8 +8,8 @@ const SearchBar: React.FC = () => {
     if (searchValue !== '') history.push(`/szukaj?q=${searchValue}`);
   };
   return (
-    <div>
-      <SearchData searchFunction={searchResources} />
+    <div className='header-search'>
+      <SearchData searchFunction={searchResources} buttonColor='white' placeholder='Szukaj informacji' />
     </div>
   );
 };

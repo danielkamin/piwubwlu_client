@@ -14,11 +14,13 @@ export const messages = {
     today: 'Dzisiaj',
     next:'Późniejsze',
     week:'Tydzień',
-    back:'xd',
+    work_week:'Tydzień roboczy',
+    previous:'Wcześniejsze',
     agenda:'Lista',
     date:'Data',
     time:'Godzina',
-    event:'Opis'
+    event:'Opis',
+    noEventsInRange:'Brak rezerwacji w tym zakresie'
 }
 export const localizer = dateFnsLocalizer({
     format,

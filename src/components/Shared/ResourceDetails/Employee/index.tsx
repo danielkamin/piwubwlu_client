@@ -20,8 +20,8 @@ const EmployeeDetails: React.FC = () => {
   const { id } = useParams<Params>();
   const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(true);
-  const [empContact, setEmpContact] = useState<EmpContact | null>(() => {
-    return null;
+  const [empEmail, setEmpEmail] = useState<string>(() => {
+    return '';
   });
   const [employeeDetails, setEmployeeDetails] = useState<IEmployee>();
   useEffect(() => {
@@ -31,16 +31,19 @@ const EmployeeDetails: React.FC = () => {
     const data = await getData(`employees/${id}`, getAccessToken());
     setEmployeeDetails(data);
     setLoading(false);
+    const emailSplit = data.email.split('@');
+    const changedEmail = emailSplit[0] + '[at]' + emailSplit[1];
+    setEmpEmail(changedEmail);
   };
-  const verifyCaptcha = async (value: string | null) => {
-    const newUrl = API_URL + '/api/utils/verify_captcha';
-    const res = await customAxios(newUrl, {
-      method: 'POST',
-      data: { userId: id, captcha: value }
-    }).then((res) => {
-      setEmpContact({ email: res.data.email, telephone: res.data.telephone });
-    });
-  };
+  // const verifyCaptcha = async (value: string | null) => {
+  //   const newUrl = API_URL + '/api/utils/verify_captcha';
+  //   const res = await customAxios(newUrl, {
+  //     method: 'POST',
+  //     data: { userId: id, captcha: value }
+  //   }).then((res) => {
+  //     setEmpContact({ email: res.data.email, telephone: res.data.telephone });
+  //   });
+  // };
   if (loading)
     return (
       <div>
@@ -48,13 +51,13 @@ const EmployeeDetails: React.FC = () => {
       </div>
     );
   return (
-    <Container maxWidth='xs' className={classes.spacing}>
-      <div className=''>
+    <Container maxWidth='sm' className={classes.spacing}>
+      <div className='links-decoration'>
         <Paper className={classes.paper}>
           <div>
             {employeeDetails?.picturePath ? <Avatar src={API_URL + '/' + employeeDetails?.picturePath} className={classes.largeAvatar} /> : <Avatar className={classes.largeAvatar} />}
             <Typography variant='h4'>
-              {employeeDetails?.lastName} {employeeDetails?.firstName}
+              {employeeDetails?.Employee?.Degree && employeeDetails?.Employee?.Degree.name} {employeeDetails?.lastName} {employeeDetails?.firstName}
             </Typography>
           </div>
           <br></br>
@@ -91,23 +94,18 @@ const EmployeeDetails: React.FC = () => {
               Numer pokoju: <b>{employeeDetails?.Employee?.room}</b>
             </Typography>
           </div>
+          <br />
           <div>
-            {empContact !== null ? (
-              <div>
-                <a href={`mailto:${empContact.email}`}>
-                  <Typography variant='body1'>
-                    <MailOutlineIcon /> {empContact.email}
-                  </Typography>
-                </a>
-                <a href={`tel:${empContact.telephone}`}>
-                  <Typography variant='body1'>
-                    <PhoneIcon /> {empContact.telephone}
-                  </Typography>
-                </a>
-              </div>
-            ) : (
-              <ReCAPTCHA sitekey='6Ldq9AUaAAAAACwhrbXsfRh0kEEbIeAk-SdOQ8M_' onChange={verifyCaptcha} />
-            )}
+            <a href={`mailto:${empEmail}`}>
+              <Typography variant='body1'>
+                <MailOutlineIcon /> {empEmail}
+              </Typography>
+            </a>
+            <a href={`tel:${employeeDetails?.Employee?.telephone}`}>
+              <Typography variant='body1'>
+                <PhoneIcon /> {employeeDetails?.Employee?.telephone !== '' ? employeeDetails?.Employee?.telephone : 'Brak'}
+              </Typography>
+            </a>
           </div>
         </Paper>
       </div>

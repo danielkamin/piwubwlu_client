@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Button, Container, CircularProgress, Typography, TextField, Paper } from '@material-ui/core';
 import { getData,putData } from '../../../api/index';
 import { useHistory } from 'react-router-dom';
+import { Calendar  } from 'react-big-calendar'
 import { getAccessToken } from '../../../utils/api/accessToken';
 import { useAlertContext, AlertType } from '../../../context/AlertContext';
 import MyDateTimePicker from '../Inputs/MyDateTimePicker';
 import { ReservationSchema } from '../../Main/schemas';
+import {messages,localizer} from './constants'
 import { Formik, Form, Field } from 'formik';
 import {dateRangeOverlaps,calculateEndDate} from './helpers'
 import useStyles from '../styles';
@@ -81,7 +83,7 @@ const UpdateResCalendar = ({ id, isMachineActive, maxUnit, timeUnit, startDate, 
     );
   return (
     <Container maxWidth='lg'>
-      <Paper className='rent-form'>
+      <div className="rent-form">
         <Typography variant='h5'>Edytuj swoją rezerwację</Typography>
         <Formik
           validateOnChange={true}
@@ -108,15 +110,27 @@ const UpdateResCalendar = ({ id, isMachineActive, maxUnit, timeUnit, startDate, 
                 placeholder='Liczba jednostek'
                 className={classes.wideSelect}
               />
-              {/* <MyDateTimePicker name='end_date' id='end-date' disabled /> */}
               <Button type='submit' variant='contained' color='secondary' disabled={isSubmitting || !isMachineActive}>
                 Edytuj Rezerwację
               </Button>
             </Form>
           )}
         </Formik>
-      </Paper>
-        
+      </div>
+      <Calendar
+      culture={"pl"}
+      localizer={localizer}
+      events={reservations}
+      startAccessor="start"
+      endAccessor="end"
+      style={{ height: 800 }}
+      defaultView='week'
+        messages={messages}
+        onSelectEvent={(event,e)=>{
+            console.log(event)
+            history.push('/rezerwacje/' + event.id);
+        }}
+    />
     </Container>
   );
 };

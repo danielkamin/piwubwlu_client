@@ -70,7 +70,7 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
 
     return (<Container maxWidth='xl'>
       {roles.indexOf(Roles.employee) !== -1 && (
-        <Paper className='rent-form'>
+        <div className="rent-form">
           <Typography variant='h5'>Zarezerwuj Maszynę</Typography>
           <Formik
             validateOnChange={true}
@@ -104,7 +104,7 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
               </Form>
             )}
           </Formik>
-        </Paper>
+        </div>
       )}
     <Calendar
     culture={"pl"}

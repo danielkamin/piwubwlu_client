@@ -61,6 +61,7 @@ export interface IMachineDetails{
   id:number;
   imagePath:string;
   Workshop:Workshop;
+  additionalInfo?:string;
 }
 
 export interface Reservation {
@@ -86,4 +87,5 @@ export interface IWorkshopDetails {
   Employees:Employee[];
   Machines:Machine[];
   WorkshopType:WorkshopType;
+  additionalInfo?:string;
 }

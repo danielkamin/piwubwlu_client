@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { getData, postData, postImage } from '../../../../api/index';
 import { getAccessToken } from '../../../../utils/api/accessToken';
-import { CircularProgress, Button, Avatar, Container, TextField, Typography, Paper, CssBaseline } from '@material-ui/core';
+import { CircularProgress, Button, Avatar, Container, TextField, Typography, Paper, FormControl, InputLabel, NativeSelect } from '@material-ui/core';
 import MyTextField from '../../../Shared/Inputs/MyTextField';
 import MyTextArea from '../../../Shared/Inputs/MyTextArea';
-import { IProfile } from '../../types';
+import { IProfile, Degree } from '../../types';
 import { ProfileSchema } from '../../schemas';
-import { Formik, Form } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import { API_URL } from '../../../../utils/constants';
 import { useAlertContext, AlertType } from '../../../../context/AlertContext';
 import useStyles from '../../styles';
@@ -21,16 +21,22 @@ const MyProfile: React.FC = () => {
     return { firstName: '', lastName: '', email: '' };
   });
   const [currentPhoto, setCurrentPhoto] = useState<string>('');
+  const [degrees, setDegrees] = useState<Degree[]>(() => {
+    return [];
+  });
   useEffect(() => {
     getProfileInfo();
   }, []);
   const getProfileInfo = async () => {
     const data = await getData('user/my_profile', getAccessToken());
+    const degreesTemp = await getData('degrees/list', getAccessToken());
     setCurrentPhoto(API_URL + '/' + data.picturePath);
     setProfileData(data);
+    setDegrees(degreesTemp);
     setLoading(false);
   };
   const updateProfileInfo = async (values: any) => {
+    values.employee = true;
     const res = await postData('user/update_profile', getAccessToken(), values).catch((err) => console.error(err));
     context.openAlert(AlertType.info, 'Pomyślnie zaktualizowano profil!');
     getProfileInfo();
@@ -68,7 +74,8 @@ const MyProfile: React.FC = () => {
             email: profileData?.email,
             information: profileData.Employee ? profileData.Employee?.information : null,
             telephone: profileData.Employee ? profileData.Employee?.telephone : null,
-            room: profileData.Employee ? profileData.Employee?.room : null
+            room: profileData.Employee ? profileData.Employee?.room : null,
+            degreeId: profileData.Employee?.Degree ? profileData.Employee?.Degree.id : 0
           }}
           onSubmit={(data, { setSubmitting }) => {
             setSubmitting(true);
@@ -86,6 +93,17 @@ const MyProfile: React.FC = () => {
                 <div>
                   <MyTextArea name='information' as={TextField} placeholder='Dodatkowe informacje' />
                   <MyTextField name='telephone' type='input' as={TextField} placeholder='Numer telefonu' />
+                  <FormControl style={{ width: '100%' }}>
+                    <InputLabel htmlFor='degreeId'>Tytuł Naukowy</InputLabel>
+                    <Field name='degreeId' type='select' as={NativeSelect}>
+                      <option value=''></option>
+                      {degrees?.map((degree) => (
+                        <option value={degree.id} key={degree.id}>
+                          {degree.name}
+                        </option>
+                      ))}
+                    </Field>
+                  </FormControl>
                   <MyTextField name='room' type='input' as={TextField} placeholder='Numer pokoju' />
                 </div>
               )}

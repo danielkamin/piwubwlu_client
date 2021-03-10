@@ -19,6 +19,28 @@ input:focus {
   outline-width: 3px;
 }
 
+.links-decoration a {
+  text-decoration: none;
+  color: #223357;
+}
+
+.links-decoration a > p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.rent-form {
+  margin: 20px 0;
+  background-color: #eeeeee;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 5px 2px #f5f5f5;
+          box-shadow: 0px 0px 5px 2px #f5f5f5;
+}
+
 .search-form {
   position: relative;
   margin-top: 1px;
@@ -289,7 +311,7 @@ input:focus {
 }
 
 .boxlink {
-  max-width: 400px;
+  width: 300px;
   margin-bottom: 30px;
   overflow: hidden;
 }
@@ -513,8 +535,8 @@ input:focus {
   display: -ms-grid;
   display: grid;
   gap: 1rem;
-  -ms-grid-columns: (minmax(240px, 1fr))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  -ms-grid-columns: (minmax(300px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
 .pagination {
@@ -568,8 +590,7 @@ input:focus {
 .lab-card .lab-card-content h5 {
   margin: 0;
   padding: 5px;
-  color: #223357;
-  letter-spacing: 1px;
+  color: #272727;
 }
 
 .lab-card .lab-card-content p {
@@ -665,6 +686,7 @@ input:focus {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
+  width: 40%;
 }
 
 .page-details .page-details-content {
@@ -679,6 +701,7 @@ input:focus {
   -webkit-box-flex: 2;
       -ms-flex-positive: 2;
           flex-grow: 2;
+  width: 60%;
 }
 
 @media only screen and (max-width: 1280px) {
@@ -733,6 +756,12 @@ input:focus {
   }
   .page-details {
     display: block;
+  }
+  .page-details .page-details-content {
+    width: 100%;
+  }
+  .page-details .image-details {
+    width: 100%;
   }
   .image-details {
     width: 250px;

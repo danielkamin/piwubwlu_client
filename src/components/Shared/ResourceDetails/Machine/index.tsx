@@ -9,6 +9,7 @@ import { useUserContext } from '../../../../context/UserContext';
 import { API_URL } from '../../../../utils/constants';
 import BrokenImageIcon from '@material-ui/icons/BrokenImage';
 import MachineCalendar from '../../Calendar/MachineCalendar';
+import NotFound from '../../../../assets/Images/not-found.webp';
 interface Params {
   id: string;
 }
@@ -35,33 +36,18 @@ const MachineDetails: React.FC = () => {
     );
   return (
     <Container maxWidth='xl'>
-      <div className='container-spacing'>
-        <Container maxWidth='sm'>
-          <div className='details'>
-            <div className='image'>
-              {machineDetails?.imagePath !== null ? (
-                <div className='image-details'>
-                  <img src={API_URL + '/' + machineDetails?.imagePath} />
-                </div>
-              ) : (
-                <Avatar variant='rounded' className={classes.image}>
-                  <BrokenImageIcon />
-                </Avatar>
-              )}
-              <div className='main'>
-                <Typography variant='h4'>{machineDetails?.name}</Typography>
-                <Typography variant='h6' paragraph={true}>
-                  {machineDetails?.english_name}
-                </Typography>
-
-                <Typography variant='subtitle2'>Status:</Typography>
-                <Typography variant='subtitle1' className='error'>
-                  {machineDetails?.machineState ? 'Aktywna' : 'Nieaktywna'}
-                </Typography>
-              </div>
-            </div>
-          </div>
-        </Container>
+      <div className='page-details'>
+        <div className='image-details'>{machineDetails?.imagePath !== null ? <img src={API_URL + '/' + machineDetails?.imagePath} /> : <img src={NotFound} />}</div>
+        <div className='page-details-content'>
+          <Typography variant='h3'>{machineDetails?.name}</Typography>
+          <Typography variant='h5'>{machineDetails?.english_name}</Typography>
+          <br />
+          <Typography variant='subtitle2'>Status:</Typography>
+          <Typography variant='subtitle1' className='error'>
+            {machineDetails?.machineState ? 'Aktywna' : 'Nieaktywna'}
+          </Typography>
+          <Typography variant='body2'>{machineDetails?.additionalInfo !== null && machineDetails?.additionalInfo}</Typography>
+        </div>
       </div>
       {context?.loggedIn && <MachineCalendar id={id} isMachineActive={machineDetails?.machineState} timeUnit={machineDetails!.timeUnit} maxUnit={machineDetails?.maxUnit} roles={context.roles} />}
     </Container>

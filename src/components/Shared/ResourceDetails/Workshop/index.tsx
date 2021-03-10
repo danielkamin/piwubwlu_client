@@ -60,13 +60,16 @@ const WorkshopDetails: React.FC = () => {
               Typ pracowni: Nie określono<br></br> Workshop type: Nie określono
             </Typography>
           )}
+          <br />
+          <Typography variant='body2'>{workshopDetails?.additionalInfo !== null && workshopDetails?.additionalInfo}</Typography>
         </div>
         <br />
       </div>
+      <Typography variant='body1'>
+        <b>Wyposażenie pracowni: </b>
+      </Typography>
+      <br />
       <div className='labs-grid'>
-        <Typography variant='body1'>
-          <b>Wyposażenie pracowni: </b>
-        </Typography>
         {workshopDetails?.Machines.map((item) => (
           <MyCard key={item.id} link={'/maszyny/' + item.id} name={item.name} english_name={item.english_name} />
         ))}

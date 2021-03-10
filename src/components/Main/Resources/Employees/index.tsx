@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getData } from '../../../../api/index';
 import { TextField, Container, MenuItem, FormControl, InputLabel } from '@material-ui/core';
 import { getAccessToken } from '../../../../utils/api/accessToken';

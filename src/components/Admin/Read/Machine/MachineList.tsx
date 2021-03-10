@@ -39,8 +39,8 @@ const MachineList: React.FC = () => {
         return <Link to={'/admin/machine/' + params.row.id}>{params.row.id}</Link>;
       }
     },
-    { field: 'name', headerName: 'Nazwa', width: 130 },
-    { field: 'english_name', headerName: 'Name', width: 130 },
+    { field: 'name', headerName: 'Nazwa', width: 300 },
+    { field: 'english_name', headerName: 'Name', width: 200 },
     { field: 'workshopId', headerName: 'Id Pracowni', width: 130 },
     { field: 'timeUnit', headerName: 'Jednostka czasu', width: 130 },
     { field: 'maxUnit', headerName: 'Max jednostek czasu', width: 130 },

@@ -100,7 +100,9 @@ const NewMachine: React.FC = () => {
               <FormControl error={!!errors.workshopId}>
                 <InputLabel htmlFor='workshopId'>Pracownia</InputLabel>
                 <Field name='workshopId' type='select' as={NativeSelect}>
-                  <option value=''>Wyberz maszynę</option>
+                  <option value='' selected key={0}>
+                    Wybierz pracownie
+                  </option>
                   {workshops.map((workshop) => (
                     <option value={workshop.id} key={workshop.id}>
                       {workshop.name}

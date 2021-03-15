@@ -1,17 +1,24 @@
 import { Typography } from '@material-ui/core';
 import React from 'react';
-
+import { Link } from 'react-router-dom';
+import wydzial from '../../../../assets/Images/wydzial.webp';
 const Banner: React.FC = () => {
   return (
-    <div className='landing'>
-      <div className='banner black-hidden'>
-        <img src='../../../assets/Images/background.jpg' className='img-cover' />
-        <div className='banner-subtitle'>
-          <Typography variant='h2'>Politechnika Białostocka</Typography>
-          <Typography variant='subtitle1'>Najlepsza uczelnia techniczna w północno-wschpdniej Polsce</Typography>
+    <section className='banner'>
+      <div className='banner-content'>
+        <p>
+          Wydziałowe centrum wypożyczeń <br />
+          aparatury badawczej
+        </p>
+        <p>ul. Wiejska 45C, 15-351 Białystok</p>
+        <div>
+          <Link to='zarezerwuj'>Zarezerwuj</Link>
         </div>
       </div>
-    </div>
+      <div className='banner-img'>
+        <img src={wydzial} />
+      </div>
+    </section>
   );
 };
 

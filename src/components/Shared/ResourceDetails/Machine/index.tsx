@@ -46,6 +46,7 @@ const MachineDetails: React.FC = () => {
           <Typography variant='subtitle1' className='error'>
             {machineDetails?.machineState ? 'Aktywna' : 'Nieaktywna'}
           </Typography>
+          <br />
           <Typography variant='body2'>{machineDetails?.additionalInfo !== null && machineDetails?.additionalInfo}</Typography>
         </div>
       </div>

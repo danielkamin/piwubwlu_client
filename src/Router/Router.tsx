@@ -45,7 +45,8 @@ import {
   ResourceSearch,
   NewDegree,
   ReadDegrees,
-  UpdateDegree
+  UpdateDegree,
+  AllResources
 } from '../components/index';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { getAccessToken, getRoles } from '../utils/api/accessToken';
@@ -62,6 +63,7 @@ import plLocale from 'date-fns/locale/pl';
 import AdminSwitch from './AdminSwitch';
 import MainSwitch from './MainSwitch';
 import NotFound from './Routes/NotFound';
+import CASLogin from '../components/Main/Auth/CASLogin/index';
 import ProfileLayout from '../containers/Layouts/Main/Profile';
 const Routes: React.FC = () => {
   return (
@@ -132,6 +134,8 @@ const Routes: React.FC = () => {
                     <Route path='/kadra' exact component={Employees} />
                     <Route path='/kadra/:id' component={EmployeeDetails} />
                     <Route path='/szukaj' component={ResourceSearch} />
+                    <Route path='/sso_login' component={CASLogin} />
+                    <Route path='/zarezerwuj' component={AllResources} />
                     <ProtectedRoute path='/rezerwacje/:id' exact component={ReservationDetails} />
                     <ProtectedRoute path='/rezerwacje/:id/ankieta' component={ReservationSurvey} />
                     <Route component={NotFound} />

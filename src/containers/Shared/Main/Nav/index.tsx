@@ -31,7 +31,8 @@ const Nav: React.FC<Props> = () => {
         <div className='header-title'>
           <Link to='/'>
             <span>
-              Platforma wynajmu urządzeń badawczych <br /> Wydziału Mechanicznego
+              Wydziałowe centrum wypożyczeń <br />
+              aparatury badawczej
             </span>
           </Link>
         </div>

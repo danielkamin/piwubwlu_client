@@ -8,7 +8,7 @@ import { useAlertContext, AlertType } from '../../../context/AlertContext';
 import MyDateTimePicker from '../Inputs/MyDateTimePicker';
 import { Roles } from '../../../utils/constants';
 import { ReservationSchema } from '../../Main/schemas';
-import { Button, Container, CircularProgress, Typography, TextField, Paper } from '@material-ui/core';
+import { Button, Container, CircularProgress, Typography, TextField } from '@material-ui/core';
 import useStyles from '../styles';
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import {messages,localizer} from './constants'
@@ -24,6 +24,19 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
     useEffect(() => {
         getReservations();
       }, []);
+      const eventStyleChange = (event, start, end, isSelected)=>{
+        if(event.state==='PENDING'){
+          let style = {
+            backgroundColor: 'lightgray',
+            borderColor:'lightgray',
+            color:'black'};
+            return {
+              style: style,
+          };
+        }
+          
+       
+      }
       const getReservations = async () => {
         const response = await getData('machines/rent/' + id, getAccessToken());
         let tempReservations = response.map((item) => {
@@ -31,7 +44,8 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
               start: new Date(item.start_date),
               end: new Date(item.end_date),
               id: item.id,
-              title: item.Employee.User.lastName + ' ' + item.Employee.User.firstName
+              title: item.Employee.User.lastName + ' ' + item.Employee.User.firstName,
+              state:item.state
             };
           });
         setReservations(tempReservations);
@@ -119,6 +133,7 @@ const MachineCalendar = ({isMachineActive,maxUnit,id,timeUnit,roles})=>{
             console.log(event)
             history.push('/rezerwacje/' + event.id);
         }}
+      eventPropGetter={eventStyleChange}
     />
   </Container>);
     

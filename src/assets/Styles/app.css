@@ -704,6 +704,117 @@ input:focus {
   width: 60%;
 }
 
+.page-title-banner {
+  background-color: #2b333e;
+  padding: 0;
+  margin: 0 auto;
+}
+
+.banner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.banner-content {
+  text-align: end;
+  padding: 0 20px;
+  width: 40%;
+  color: white;
+}
+
+.banner-content p:first-child {
+  font-size: 1.6rem;
+}
+
+.banner-content p {
+  font-size: 1.4rem;
+}
+
+.banner-content a {
+  text-decoration: none;
+  color: white;
+  border: 1px solid white;
+  border-radius: 3px;
+  padding: 5px 8px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.banner-content a:hover {
+  opacity: 0.4;
+}
+
+.banner-img {
+  width: 60%;
+  padding: 0;
+}
+
+.banner-img img {
+  width: 100%;
+  max-height: 70vh;
+  height: auto;
+  vertical-align: middle;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.resource-list-container {
+  padding: 2rem 1rem;
+}
+
+.login-alert {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.login-alert h3 {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.login-alert h3::after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  bottom: -3px;
+  border-bottom: 2px dotted #d84848;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.resource-list-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 5px;
+}
+
+.resource-list-item a {
+  text-decoration: none;
+  color: black;
+  margin-left: 5px;
+}
+
 @media only screen and (max-width: 1280px) {
   .home-grid {
     -ms-grid-columns: 1fr 1fr;
@@ -765,6 +876,18 @@ input:focus {
   }
   .image-details {
     width: 250px;
+  }
+  .banner {
+    -ms-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+  }
+  .banner-content {
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .banner-img {
+    width: 100%;
   }
 }
 

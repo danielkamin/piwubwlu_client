@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getData } from '../../../../api/index';
 import { getAccessToken } from '../../../../utils/api/accessToken';
 import { CircularProgress, Container, Typography, Avatar } from '@material-ui/core';
@@ -19,13 +19,15 @@ const MachineDetails: React.FC = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState<boolean>(true);
   const [machineDetails, setMachineDetails] = useState<IMachineDetails>();
+  const [supervisors, setSupervisors] = useState([]);
   useEffect(() => {
     getMachineDetails();
   }, []);
 
   const getMachineDetails = async () => {
-    const data = await getData(`machines/${id}`, getAccessToken());
-    setMachineDetails(data);
+    const [machines, supervisors] = await Promise.all([getData(`machines/${id}`, getAccessToken()), getData(`machines/supervisors/${id}`, getAccessToken())]);
+    setMachineDetails(machines);
+    setSupervisors(supervisors);
     setLoading(false);
   };
   if (loading)
@@ -42,9 +44,19 @@ const MachineDetails: React.FC = () => {
           <Typography variant='h3'>{machineDetails?.name}</Typography>
           <Typography variant='h5'>{machineDetails?.english_name}</Typography>
           <br />
-          <Typography variant='subtitle2'>Status:</Typography>
+          <Typography variant='subtitle2'>
+            Status: <b>{machineDetails?.machineState ? 'Aktywna' : 'Nieaktywna'}</b>
+          </Typography>
+          <br />
           <Typography variant='subtitle1' className='error'>
-            {machineDetails?.machineState ? 'Aktywna' : 'Nieaktywna'}
+            <b>Osoby nadzorujące:</b>
+            {supervisors.map((supervisor: any) => (
+              <div key={supervisor.id}>
+                <Link to={`/kadra/${supervisor.id}`}>
+                  {supervisor.firstName} {supervisor.lastName}
+                </Link>
+              </div>
+            ))}
           </Typography>
           <br />
           <Typography variant='body2'>{machineDetails?.additionalInfo !== null && machineDetails?.additionalInfo}</Typography>

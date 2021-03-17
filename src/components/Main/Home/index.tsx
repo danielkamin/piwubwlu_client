@@ -7,6 +7,7 @@ const Home: React.FC = () => {
   const classes = useStyles();
   return (
     <div>
+      <Banner />
       <Container maxWidth='xl'>
         <Cards />
       </Container>

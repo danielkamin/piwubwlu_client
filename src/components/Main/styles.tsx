@@ -50,6 +50,22 @@ const useStyles = makeStyles((theme) => ({
   },
   wideSelect: {
     width: 150
+  },
+  accordionDetails: {
+    display: 'block',
+    '& > div': {
+      padding: '10px'
+    }
+  },
+  accordionCustom: {
+    '& a': {
+      textDecoration: 'none',
+      color: 'black',
+      transition: 'all 0.3s'
+    },
+    '& a:hover': {
+      opacity: 0.6
+    }
   }
 }));
 export default useStyles;

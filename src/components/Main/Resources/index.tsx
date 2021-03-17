@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import React, { useState, useEffect, useRef } from 'react';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { getData } from '../../../api/index';
+import { Accordion, AccordionSummary, AccordionDetails, FormControlLabel, Typography } from '@material-ui/core';
 import { getAccessToken } from '../../../utils/api/accessToken';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import LinkIcon from '@material-ui/icons/Link';
+import { useUserContext } from '../../../context/UserContext';
+import useStyles from '../styles';
 type Resource = {
   id: number;
   name: string;
@@ -15,6 +20,8 @@ type Resource = {
   }[];
 };
 const AllResources: React.FC = () => {
+  const classes = useStyles();
+  const userContext = useUserContext();
   const [resources, setResources] = useState<Resource[]>([]);
   const history = useHistory();
   useEffect(() => {
@@ -28,31 +35,42 @@ const AllResources: React.FC = () => {
       })
       .catch((err) => console.log(err));
   };
-  const redirectToResource = (model: string, id: number) => {
-    history.push(`${model}/${id}`);
-  };
   return (
-    <div>
-      lista
-      <ul>
-        {resources.map((lab) => (
-          <li key={lab.id}>
-            {lab.name}
-            <ul>
-              {lab.Workshops.map((workshop) => (
-                <li key={workshop.id}>
-                  {workshop.name}
-                  <ul>
-                    {workshop.Machines.map((machine) => (
-                      <li key={machine.id}>{machine.name}</li>
-                    ))}
-                  </ul>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+    <div className='resource-list-container'>
+      {!userContext.loggedIn && (
+        <div className='login-alert'>
+          <h3>W celu rezerwacji maszyny należy się zalogować!</h3>
+        </div>
+      )}
+      {resources.map((lab) => (
+        <Accordion className={classes.accordionCustom}>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-label='Expand' aria-controls='additional-actions1-content' id='additional-actions1-header'>
+            <Link to={`/laboratoria/${lab.id}`}>{lab.name}</Link>
+          </AccordionSummary>
+          <AccordionDetails className={classes.accordionDetails}>
+            <Typography variant='subtitle2'>
+              <b>Pracownie:</b>
+            </Typography>
+            {lab.Workshops.map((workshop) => (
+              <Accordion style={{ width: '100%' }}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-label='Expand' aria-controls='additional-actions1-content' id='additional-actions1-header'>
+                  <Link to={`/pracownie/${workshop.id}`}>{workshop.name}</Link>
+                </AccordionSummary>
+                <AccordionDetails className={classes.accordionDetails}>
+                  <Typography variant='subtitle2'>
+                    <b>Wyposażenie:</b>
+                  </Typography>
+                  {workshop.Machines.map((machine) => (
+                    <div>
+                      <Link to={`/maszyny/${machine.id}`}>{machine.name}</Link>{' '}
+                    </div>
+                  ))}
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </AccordionDetails>
+        </Accordion>
+      ))}
     </div>
   );
 };
